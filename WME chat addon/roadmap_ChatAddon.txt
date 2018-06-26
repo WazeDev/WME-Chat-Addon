@@ -1,0 +1,171 @@
+Chat addon
+
+
+v0.5:
+
+fix: scroll
+fix: song on message from hidden user when hide message activated
+fix: song on open new tab
+settings moved on top bar
+sort user list on user name or rank (user name for secondary sort)
+header light grey when invisible
+smileys:
+':)'
+':D'
+';)'
+':('
+':o'
+':?'
+'8-)'
+':x'
+':P'
+':|'
+force room connection
+background color of alert keywords in message
+click on highlihted keyword to remove alert
+
+v0.6:
+
+bugfix: bad permalink
+added smileys: ^^ => :lol: , :S => :? , oO:  :shock: 
+TTS
+exact keyword using $$
+meilleure gestion des messages systèmes
+
+
+v0.7:
+- couleur de bell OK
+- bandeau newMessage: width=332 OK
+- dernier message posté par qqun qui leave disparait si suppression des messages des hors room - ok
+
+v0.8:
+- bug selection des données après un jump OK
+- tri sur activité par groupe séparés par une ligne  avec désactivation du tri si souris sur liste users OK
+- bug transition couleur OK
+- bug smiley dans lien a vérifier
+
+v0.9:
+- bugfix: cloche ne fonctionne plus au bout d'un moment.
+- suppression des traits de séparation des groupes si l'option tri par activité est désactivée
+- infobulle sur les noms des users
+- Traduction FR
+- bug fix nouvelle version WME
+- tri sur distance
+
+v1.0:
+- traduction allemand
+- nom du user sur icone liveuser
+- fix TTS aléatoirement HS
+- fix lien sans :// se rajoutait à la base URL
+b3
+- boutons supprimer tous les messages
+- export texte des messages
+- ajout du rank sur messages has joined et has left
+- joindre une room en entrant son nom
+b4:
+- bugfix: cloches non MAJ après changement de room
+- images rechargées toutes les secondes
+
+
+v1.1
+b1
+- bugfix: cloches n'aparaissaient plus au changement de room
+- smileys
+- scroll FF
+b2
+- tetative MAJ socket dans io
+b3
+- emoji tapatalk: http://club.myce.com/f34/tapatalk-emoji-smiley-set-how-insert-even-your-web-browser-337619/
+b4
+- icone pour forcer une reconnexion
+
+v1.1b1
+- liste CM
+
+v1.1b2
+- bugfix bouton CM dans settings
+- masquage bouton CM si déjà autorisé.
+
+v1.1b3:
+- ajout de la room "MapRaid France" au démarrage
+- status CM si l'éditeur est sur le pays concerné.
+
+v1.2b1:
+- CM souligné
+- nouvelle option: son est message personnalisé sur entrée et sortie d'éditeur:
+  cf dans les options: format:
+	username:messageEntree:sonEntree:messageSortie:sonSortie
+	répété autant de fois qu'on veut en séparant avec des virgules
+	message et son peuvent être null pour désactiver
+	son peur être: "door" ou "TTStexte à dire"
+	ex: dummyd2:faut lui dire bonjour...:TTSdummyd2 est entré:null:door
+
+v1.2b3:
+- match usernames: gestion des google spread sheets: ajouter la clef d'une ou plusieurs google spreadsheets comme un user (entre 2 virgules). La SH doit avoir 2 cols. Même format que en manuel.
+
+v1.2b7:
+- son des users desactivable
+- cumul des sons users si plusieurs fois le même nom
+
+v1.3b1:
+- TTS chez responsiveVoice
+
+v1.3b3:
+- fr_FR non sauvegardé
+- selection POI: landmarx
+
+V1.3b4:
+- TTS multi browser avec responsive voice
+
+v1.3b5:
+- bugfix phrase coupée
+- vitesse de diction paramétrable.
+
+v1.3b6:
+- bugfix info bulles
+- traduction fr
+
+1.4b1:
+- bugfix: si déjà CM mais nouveau pays pas ajouté
+
+1.4.1 beta 1:
+- 6eme colonne pour la couleur des users
+
+1.4.1 beta 2:
+- suppression du tiret dans les nom des users pour le tts
+
+1.4.1 beta 3:
+- fix si responsivevoice pas chargé
+- fix playback rate RV
+
+1.4.1 beta 4 et 5:
+- Ajout du switch beta/prod
+
+1.5 beta 1:
+- traduction des perma beta en prod si sur éditeur beta et chat prod
+
+1.5 beta 2:
+- Historique
+
+TODO:
+- bug démarrage en invisible: bandeau du haut à passer en gris clair.
+- bug 2 smiley de suite: détecté comme 2 messages vides, donc 2eme passe en visible false
+- pas de notif activité sur message d'un invisible
+- étendre le fond bleu sous le pseudo en option
+- pas jouer de son si message d'un user hors liste
+- transparence et largeur du chat - cf fafa114
+- echo avec plusieurs tabs
+- ouverture auto sur nouveau message (bouton ou timeout en option)
+- maintenir la room si roomchange automatique (mais pas manuel!)
+- défiler automatique
+- bug plusieurs onglets, le + ancien ne met pas les cloches à jour
+- @all en option
+- garder la connexion à la dernière room et mettre en grisé les talks
+- supprimer une room
+- choisir le tchat officiel depuis la beta
+- crypter les conversations avec mot de passe
+- tous les smileys phpbb
+- traduire #room par un click joind room
+- couleur des users en fonction de leur groupe fofo
+- PL select UR, MP, Camera, venues
+- Upload des AM et leur zones

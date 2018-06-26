@@ -1,0 +1,38 @@
+﻿<?php
+
+$link = mysql_connect("localhost", "clog", "hT5_sX23");
+//var_dump ($link);
+
+$db_selected = mysql_select_db('clog', $link);
+
+$query="SET NAMES 'utf8'";
+$result = mysql_query($query, $link);
+
+
+if (!isset($_GET['room']))
+{
+	mysql_close($link);
+	die ("[]");
+}
+
+$room = $_GET['room'];
+
+$query="SELECT * FROM record WHERE room='" . $room . "' ORDER BY id DESC LIMIT 0,10";
+//var_dump($query);
+$result = mysql_query($query, $link);
+
+$data = array();
+
+while ($row = mysql_fetch_assoc($result)) {
+		if ($row['room']!=$room) continue;
+		$msg = array();
+		$msg["username"]=$row['username'];
+		$msg["message"]=$row['message'];
+		$msg["datetime"]=$row['datetime'];
+		array_push($data, $msg);
+		
+}
+//var_dump($data);
+echo json_encode(array_reverse($data));
+mysql_close($link);
+?>

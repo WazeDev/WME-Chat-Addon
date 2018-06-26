@@ -1,0 +1,52 @@
+Chat addon
+
+todo:
+- smileys pour soi-même? ou pb lien forum? - OK
+- dernier message posté par qqun qui leave disparait si suppression des messages des hors room - ok?
+- déco des rooms autres que préféré. - ok
+- cloches à faire non visible si invisible. - OK
+- étendre le fond bleu sous le pseudo en option
+- pas jouer de son si message d'un user hors liste - a verfifier
+- pas de notif activité sur message d'un invisible
+- fond rouge sur messages d'alerte - ok
+- export texte des messages
+- transparence et largeur du chat - cf fafa114
+- son de message qd on ouvre un second onglet - OK
+- cloches disparaissent qd on ouvre un second onglet: la liste des users est rafraichie par WME mais userEnter n'est pas appellée - OK
+- 3eme son que sur une liste de users
+- clic sur alerte pour valider - OK
+- regexp sur mots clefs d'alerte: seb != sebi OK
+- verifier si le tts fonctionne s'il y a un " , ?, ê, dans le texte
+- bug: alerte dans liens
+
+
+v0.5:
+
+fix: scroll
+fix: song on message from hidden user when hide message activated
+fix: song on open new tab
+settings moved on top bar
+sort user list on user name or rank (user name for secondary sort)
+header light grey when invisible
+smileys:
+':)'
+':D'
+';)'
+':('
+':o'
+':?'
+'8-)'
+':x'
+':P'
+':|'
+force room connection
+background color of alert keywords in message
+click on highlihted keyword to remove alert
+
+v0.6:
+
+bugfix: bad permalink
+added smileys: ^^ => :lol: , :S => :? , oO:  :shock: 
+TTS
+exact keyword using $$
+

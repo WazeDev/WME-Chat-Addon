@@ -1,0 +1,185 @@
+﻿<?php
+
+function startsWith($haystack, $needle) {
+    // search backwards starting from haystack length characters from the end
+    return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== FALSE;
+}
+
+function endsWith($haystack, $needle) {
+    // search forward starting from end minus needle length characters
+    return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== FALSE);
+}
+
+function my_var_dump($message, $var)
+{
+	global $debug;
+	if (!$debug) return;
+	echo $message . "<br />";
+	var_dump($var);
+}
+
+$link = mysql_connect("localhost", "clog", "hT5_sX23");
+//var_dump ($link);
+
+$db_selected = mysql_select_db('clog', $link);
+
+$query="SET NAMES 'utf8'";
+$result = mysql_query($query, $link);
+
+$data = json_decode(file_get_contents('php://input'), true);
+
+$debug=false;
+if ($data==null)
+{
+	$debug=true;
+}
+
+if ($debug)
+{
+
+	$data = json_decode('[{"room":"test",
+											"username":"d2",
+											"datetime":"2015-11-17T21:45:50.446Z",
+											"message":"123"},
+											{"room":"test",
+											"username":"d2",
+											"datetime":"2015-11-17T21:45:50.446Z",
+											"message":"оборудование предприятий"},
+											{"room":"test",
+											"username":"d2",
+											"datetime":"2015-11-17T21:45:50.446Z",
+											"message":"оборудование предприятий"}]',
+											true);
+	my_var_dump("data", $data);
+}
+
+$now = gmdate("Y-m-d\TH:i:s\.000\Z");
+
+//$query="LOCK TABLES record WRITE";
+//$result = mysql_query($query, $link);
+
+//if (!$result)
+//	die();
+//var_dump($data);
+for ($i=0; $i<count($data); $i++)
+{
+	//if ($debug) var_dump(utf8_decode($data[$i]['message']));
+	//$room = mysql_real_escape_string(utf8_decode($data[$i]['room']));
+	$room = mysql_real_escape_string($data[$i]['room']);
+	//$message = mysql_real_escape_string(utf8_decode($data[$i]['message']));
+	$message = mysql_real_escape_string($data[$i]['message']);
+	//$username = mysql_real_escape_string(utf8_decode($data[$i]['username']));
+	$username = mysql_real_escape_string($data[$i]['username']);
+	//$datetime = mysql_real_escape_string(utf8_decode($data[$i]['datetime']));
+	//$datetime = mysql_real_escape_string($data[$i]['datetime']);
+	
+	//if ($debug)	var_dump($data);
+
+	//$message = $data[$i]['message'];
+	$nowUTC = time();
+	
+	//if ($debug) var_dump($nowUTC);
+	$nowUTC -= 2;
+	//if ($debug) var_dump($nowUTC);
+	
+	// get last message:
+	$query="SELECT * FROM record WHERE " . 
+				 "room='" . $data[$i]['room'] . "' " . 
+				 //"AND username='" . $data[$i]['username'] . "' " . 
+				 //"AND message LIKE '%" . mysql_real_escape_string($data[$i]['message']) . "%' " .
+				 //"AND datetime>DATE_SUB('" . $now . "', INTERVAL 4 SECOND)";
+				 " ORDER BY datetime DESC LIMIT 0,1";
+	//echo $query;
+	$lastMessage=null;
+  my_var_dump("query last message" , $query);
+	$result = mysql_query($query, $link);
+	my_var_dump("result", $result);
+	$row = mysql_fetch_assoc($result);
+	if ($row)
+		$lastMessage=$row;
+	my_var_dump("lastmessage", $lastMessage);
+	
+	$query="SELECT * FROM record WHERE " . 
+				 "room='" . $data[$i]['room'] . "' " . 
+				 "AND username='" . $data[$i]['username'] . "' " . 
+				 //"AND message LIKE '%" . mysql_real_escape_string($data[$i]['message']) . "%' " .
+				 "AND datetime>DATE_SUB('" . $now . "', INTERVAL 4 SECOND)";
+				 //" ORDER BY datetime DESC LIMIT 0,1";
+	//echo $query;
+  my_var_dump("query last per date 4 sec", $query);
+	$result = mysql_query($query, $link);
+	my_var_dump("result", $result);
+	
+	$found = false;
+	$toUpdate = 0;
+	$toConcat = null;
+	while ($row = mysql_fetch_assoc($result))
+	{
+		my_var_dump("row", $row);
+		my_var_dump("utf8_encode(\$row['message'])", utf8_encode($row['message']));
+		//if (utf8_encode($row['message']) == $data[$i]['message'] ||
+		//		startsWith(utf8_encode($row['message']), $data[$i]['message']))
+		if (strcmp($row['message'], $data[$i]['message'])==0 ||
+				startsWith($row['message'], $data[$i]['message']))
+		{
+			$found=true;
+			break;
+		}
+		//if (startsWith($data[$i]['message'], utf8_encode($row['message'])))
+		if (startsWith($data[$i]['message'], $row['message']))
+		{
+			$toUpdate=$row['id'];
+		}
+	}
+	my_var_dump("found", $found);
+	if ($found)
+		continue;
+	
+	if ($lastMessage!=null)
+	{
+		//if (startsWith($data[$i]['message'], utf8_encode($lastMessage['message'])) &&
+		if (startsWith($data[$i]['message'], $lastMessage['message']) &&
+				$lastMessage['username']==$data[$i]['username'])
+			$toUpdate=$lastMessage['id'];
+		else if ($lastMessage['username']==$data[$i]['username'])
+			$toConcat=$lastMessage;
+			
+		//if (endsWith(utf8_encode($lastMessage['message']), $data[$i]['message']) &&
+		if (endsWith($lastMessage['message'], $data[$i]['message']) &&
+				$lastMessage['username']==$data[$i]['username'])
+				continue;
+	}
+	
+	if (!$found)
+	{
+		if ($toUpdate!=0)
+		{
+			$query="UPDATE record SET message='" . $message . "' WHERE id=" . $toUpdate;
+		}
+		else if ($toConcat!=null)
+		{
+			$query="UPDATE record SET message='" . mysql_real_escape_string($toConcat['message']) . "\n" . $message . "' WHERE id=" . $toConcat['id'];
+		}
+		else
+		{
+			$query="INSERT INTO record (room, username, message, datetime) VALUES ('" . $room . "' , '" . $username . "' , '" . $message . "' , UTC_TIMESTAMP())";
+		}
+		my_var_dump("query insert or update", $query);
+		$result = mysql_query($query, $link);
+		my_var_dump("result", $result);
+		if (!$result)
+			my_var_dump("MySQL error:", mysql_error());
+
+	}
+}
+
+//$query="UNLOCK TABLES";
+//$result = mysql_query($query, $link);
+
+mysql_close($link);
+
+//$row = mysql_fetch_assoc($result);
+
+
+
+?>
