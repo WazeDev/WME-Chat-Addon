@@ -70,11 +70,11 @@ if (gettype($data)=="array") /* previous version of chataddon*/
 if (property_exists($data, "user")==false)
     die();
 
-// set in shmem users connected
+/* set in shmem users connected*/
 if ($data->room=="France")
 {
     /* read shared memory*/
-    $shmem_max_size=262144; // 1 MB
+    $shmem_max_size=262144; /* 1 MB*/
 
     $shmem_id=shmop_open(0xff01, "c", 0644, $shmem_max_size);
 
