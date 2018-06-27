@@ -8,11 +8,11 @@ if (!isset($_GET['room']))
 
 $room = $_GET['room'];
 
-//if ($room!='France')
-//    die ('[{"username":"ChatAddon","message":"Chat history disabled because of server overload.","datetime":""}]');
+/*if ($room!='France')
+    die ('[{"username":"ChatAddon","message":"Chat history disabled because of server overload.","datetime":""}]');*/
 
 $link = mysql_connect("localhost", "clog", "hT5_sX23");
-//var_dump ($link);
+/*var_dump ($link);*/
 
 $db_selected = mysql_select_db('clog', $link);
 
@@ -25,9 +25,9 @@ $transRoomNameFromHR2DB=array(' ' => '_');
 $table = strtr($room, $transRoomNameFromHR2DB) . "_room";
 
 $query="SELECT * FROM " . $table . " ORDER BY datetime DESC, id DESC LIMIT 0,10";
-//var_dump($query);
+/*var_dump($query);*/
 $result = mysql_query($query, $link);
-if (!$result) // no history for this room (i.e. no table)? or any other mysql error
+if (!$result) /* no history for this room (i.e. no table)? or any other mysql error*/
 {
 	mysql_close($link);
 	die ("[]");
@@ -42,7 +42,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		$msg["datetime"]=$row['datetime'];
 		array_push($data, $msg);
 }
-//var_dump($data);
+/*var_dump($data);*/
 
 
 /*$msg = array();
