@@ -2,10 +2,10 @@
 // @name 			WME Chat addon
 // @description 	removes duplicates messages, formats link and permalinks, and some stuffs
 // @namespace 		dummyd2
-// @version 		1.23
+// @version 		2018.06.27.01
 // @icon			data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAAZiS0dEAAAAAAAA+UO7fwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB94DDg83H1XMMOAAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAEQ0lEQVRYw+2XTUhcVxTHf0+dwcxUHawuxImtH0hbBEebGLCFutGFgSaBriImoXRRBLciqYuKza4bN21dVFcJgouE2IKolIJYP0BmFCwKoyJxksyMTGZ0Zvpax3u6eW+YD40abTftH+7mvnfv/3/OPfecc+G/Du0ca2sBJ5Bv7BMDXgDr/6Tgz4CfgAAQAaIGcQzYB8KAH/gZuHVRpAXAbeAlIIDk5uaKzWZTRUVFUlxcLMXFxVJUVCQ2m03y8vLE/A/wAV8Aljc9gk+AB8BHABUVFTQ0NHDt2jWuXLlCbW0tZWVlKKXw+/14vV4WFxdZWFhgaWlJdnZ2zP0XgF7g17NY/qXhUrHb7aq/v195PB45DZRSsrKyIgMDA2K1Wk1vhAxvnAq3AR2QiooKtba2JkqpNILTIJFIyMbGhqqvr1eGiEOg6yTyauBPQOrq6lQikTgTaaYnRET8fr80NzcLoAzDPn6dgBlA6uvrVTgcfmPyTBHb29tSU1NjHscvgP0o8k8BcTgcanp6+tzkmSJmZ2dNAQcGVxZ+A+TmzZvnZz0GHR0dZjwMAdZU8hLgldVqVUNDQxdmfSZmZmZML2wAhZl3fr+goEBWV1ezXHiUmNMIzLw94XBY7Ha7KaIkJ0XAW0COxWKhqqoqPVtpGpqmMTw8zN27d3ny5Ely/uHDh9y5c4epqSmUUiilePz4Mffu3WNychJN0xCRtH2MYMxKhNeBmMPhkN3d3SxLxsfHpbCwUABxOp3i8Xhkfn4+mXbz8/MlEAiI1+tNzmmaJj6fL22fcDgsNTU1ZhyUpnrgBXB4cHAgq6urAEnlAJubm8TjcQACgQCRSIS1tbXkd13XCYVCbG1tJedEhPX19OKo6zper1cD/jISU1pdeJ6TkyN9fX1ZHvD5fNLa2ipOp1M6OzslGAxKNBqVlpYWKS8vl46ODonH4xKNRqW9vV2cTqfcuHEjKxZGRkZM62ePygXDgDQ1NalgMJi1OBQKidvtlkgkkvy2v78vHo9HYrFYcm5vb0+Wl5dF1/WsQKyurjYF3AdyMgWUmOc3ODiYFv2ZEX/czTjqFpj/9fT0pJbpD49LxQ9MEXNzc+oiMqCIyNjYmFgsFmXUg+9eVwvyzXrQ1NR0IeSPHj0Sh8Nhun4JePukingLEJfLda6sFwwGpaurS9nt9lTyd0/TD1w/j4BQKCS9vb1SWloqmqaZ5z4JlGYS5R1BbgM+B7h8+bLouq6Nj48zOjoqT58+1RKJBC6Xi7a2NmlsbNQqKys5PDzk2bNneDweJiYmcLvd5l7K6Kq+B74GEqex/r7ZvXR3d6urV6+qlCZTjA5YThgxwA18C7x/lnfBV8A3Keo1Y0SM8jkLxI2u6YNj3gW/G2+DdeD5WZrQFoMo05ofgXeOSBoWg/ySMfJf134fh9QYuAT8YVjzEvgBGAFeHbP2wBgXivcAF//jX8TfP8rg1M0AqeYAAAAASUVORK5CYII=
-// @updateURL   	https://greasyfork.org/scripts/2103-wme-chat-addon/code/WME%20Chat%20addon.user.js
-// @downloadURL 	https://greasyfork.org/scripts/2103-wme-chat-addon/code/WME%20Chat%20addon.user.js
+// @updateURL   	https://greasyfork.org/scripts/369855-wme-chat-addon/code/WME%20Chat%20addon.meta.js
+// @downloadURL 	https://greasyfork.org/scripts/369855-wme-chat-addon/code/WME%20Chat%20addon.user.js
 // @include         https://www.waze.com/editor*
 // @include         https://www.waze.com/*/editor*
 // @include         https://beta.waze.com/*
@@ -13,8 +13,8 @@
 // @exclude         https://www.waze.com/*/user/*
 // @grant			GM_xmlhttpRequest
 // @grant           unsafeWindow
-// @author			Dummyd2, Seb-D59
-// @copyright       2018, dummyd2, Seb-D59
+// @author			Dummyd2, Seb-D59, WazeDev
+// @copyright       2018, dummyd2, Seb-D59, WazeDev
 // @connect         docs.google.com
 // @connect         waze.lesduts.info
 // @connect         code.responsivevoice.org
@@ -104,7 +104,7 @@ function lookFordownloadHelperJob() {
 }
 window.setTimeout(lookFordownloadHelperJob);
 function run_CA() {
-  var ca_version = "1.23";
+  var ca_version = "2018.06.27.01";
   var isDebug = false;
   var targetCount = 0;
   var bipCount = 0;
@@ -283,7 +283,7 @@ function run_CA() {
     }
   }
   function initializeWazeObjects() {
-    var objectToCheck = ["Waze", "Waze.model", "Waze.Config", "Waze.map", {key:"Waze.model.chat.users.length", value:0, operator:"!="}, "Waze.selectionManager", "Waze.loginManager.user.userName", "localStorage"];
+    var objectToCheck = ["W", "W.model", "W.Config", "W.map", {key:"W.model.chat.users.length", value:0, operator:"!="}, "W.selectionManager", "W.loginManager.user.userName", "localStorage"];
     for (var i = 0; i < objectToCheck.length; i++) {
       if (typeof objectToCheck[i] == "object") {
         var path = objectToCheck[i].key.split(".");
@@ -340,12 +340,12 @@ function run_CA() {
   }
   function addMyselfToCMList() {
     log("Add myself to CM list...");
-    if (Waze.loginManager.user.isCountryManager()) {
-      if (isRegisteredAsCM(Waze.loginManager.user.userName, Waze.loginManager.user.editableCountryIDs)) {
+    if (W.loginManager.user.isCountryManager()) {
+      if (isRegisteredAsCM(W.loginManager.user.userName, W.loginManager.user.editableCountryIDs)) {
         alert(tr("You are already registered as CM for chat addon."));
       } else {
         if (confirm(tr("Message from Chat addon:\n\nYou are Country Manager.\nDo you allow chat addon to upload to a private server your username and the country(ies) you manage?\nIf you do so, all editors using chat addon will see your name colored in red.\nIf you answer no, you can still change your mind in chat addon settings.\nThanks."))) {
-          var params = {url:"http://waze.lesduts.info/userInfo/set.php?status=CM&username=" + Waze.loginManager.user.userName + "&clist=" + Waze.loginManager.user.editableCountryIDs.join(","), headers:{"User-Agent":"Mozilla/5.0", "Accept":"text/plain"}, data:null, method:"GET"};
+          var params = {url:"http://waze.lesduts.info/userInfo/set.php?status=CM&username=" + W.loginManager.user.userName + "&clist=" + W.loginManager.user.editableCountryIDs.join(","), headers:{"User-Agent":"Mozilla/5.0", "Accept":"text/plain"}, data:null, method:"GET"};
           WMECADownloadHelper.add(params, function(data) {
           }, null);
           CA_Settings.allowUploadStatus = true;
@@ -363,14 +363,14 @@ function run_CA() {
       if (data.status == "success") {
         try {
           CMList = JSON.parse(data.data);
-          if (Waze.loginManager.user.isCountryManager() && isRegisteredAsCM(Waze.loginManager.user.userName, Waze.loginManager.user.editableCountryIDs) == false && (CA_Settings.allowUploadStatus == null || CA_Settings.allowUploadStatus == true)) {
+          if (W.loginManager.user.isCountryManager() && isRegisteredAsCM(W.loginManager.user.userName, W.loginManager.user.editableCountryIDs) == false && (CA_Settings.allowUploadStatus == null || CA_Settings.allowUploadStatus == true)) {
             addMyselfToCMList();
           }
         } catch (e) {
           log("Error while getting CM list from server!", e);
           log("data", data.data);
         }
-        if (Waze.loginManager.user.isCountryManager() && isRegisteredAsCM(Waze.loginManager.user.userName, Waze.loginManager.user.editableCountryIDs)) {
+        if (W.loginManager.user.isCountryManager() && isRegisteredAsCM(W.loginManager.user.userName, W.loginManager.user.editableCountryIDs)) {
           getId("CA-opt-addMeToCMList").style.display = "none";
         }
       }
@@ -402,57 +402,57 @@ function run_CA() {
     window.setTimeout(processTTS);
   }
   function initialiseCA() {
-    var oriSendMessage = Waze.model.chat.sendMessage;
-    Waze.model.chat.sendMessage = function(m) {
-      if (Waze.Config.marx.server == "https://marx.waze.com:443" && document.location.host.indexOf("beta") != -1 && m.search(baseURLs[2]) != -1) {
+    var oriSendMessage = W.model.chat.sendMessage;
+    W.model.chat.sendMessage = function(m) {
+      if (W.Config.marx.server == "https://marx.waze.com:443" && document.location.host.indexOf("beta") != -1 && m.search(baseURLs[2]) != -1) {
         m = m.replace("https://beta.waze.com/", "https://www.waze.com/");
         log("beta perma changed to prod: " + m);
       }
-      oriSendMessage.call(Waze.model.chat, m);
+      oriSendMessage.call(W.model.chat, m);
     };
-    Waze.model.chat.messages.on("messageUpdated", function() {
+    W.model.chat.messages.on("messageUpdated", function() {
       try {
         iSendAMessage.apply(this, arguments);
       } catch (e) {
         logError("Error: ", e);
       }
     });
-    Waze.model.chat.messages.on("add", function() {
+    W.model.chat.messages.on("add", function() {
       try {
         iSendAMessage.apply(this, arguments);
       } catch (e) {
         logError("Error: ", e);
       }
     });
-    Waze.model.chat.on("change:open", function() {
+    W.model.chat.on("change:open", function() {
       try {
         openChatGUI.apply(this, arguments);
       } catch (e) {
         logError("Error: ", e);
       }
     });
-    Waze.model.chat.on("change:visible", function() {
+    W.model.chat.on("change:visible", function() {
       try {
         updateInvisibleHeaderColor.apply(this, arguments);
       } catch (e) {
         logError("Error: ", e);
       }
     });
-    Waze.model.chat.on("change:room", function() {
+    W.model.chat.on("change:room", function() {
       try {
         roomChanged.apply(this, arguments);
       } catch (e) {
         logError("Error: ", e);
       }
     });
-    Waze.model.chat.users.on("add", function() {
+    W.model.chat.users.on("add", function() {
       try {
         userEnter.apply(this, arguments);
       } catch (e) {
         logError("Error: ", e);
       }
     });
-    Waze.model.chat.users.on("remove", function() {
+    W.model.chat.users.on("remove", function() {
       try {
         userLeave.apply(this, arguments);
       } catch (e) {
@@ -561,7 +561,7 @@ function run_CA() {
       sortUserList();
     };
     getId("chat").getElementsByClassName("message-list")[0].style.maxHeight = "290px";
-    Waze.model.liveUsers.users.on("add", function() {
+    W.model.liveUsers.users.on("add", function() {
       try {
         liveUserAdded.apply(this, arguments);
       } catch (e) {
@@ -584,14 +584,14 @@ function run_CA() {
     }
     window.setInterval(heartBeat, 3000);
     roomChanged();
-    log("Init done", Waze.model.chat.attributes.room.attributes.name);
+    log("Init done", W.model.chat.attributes.room.attributes.name);
   }
   function heartBeat() {
     if (uid == null) {
       uid = generateUUID();
     }
-    if (historyLeaders.hasOwnProperty(Waze.model.chat.attributes.roomName) && historyLeaders[Waze.model.chat.attributes.roomName] == Waze.loginManager.user.userName + "_" + uid) {
-      var params = {url:"http://waze.lesduts.info/clog/postHistory.php", headers:{"Content-Type":"application/json"}, data:JSON.stringify({user:Waze.loginManager.user.userName, uid:uid, room:Waze.model.chat.attributes.roomName}), method:"POST"};
+    if (historyLeaders.hasOwnProperty(W.model.chat.attributes.roomName) && historyLeaders[W.model.chat.attributes.roomName] == W.loginManager.user.userName + "_" + uid) {
+      var params = {url:"http://waze.lesduts.info/clog/postHistory.php", headers:{"Content-Type":"application/json"}, data:JSON.stringify({user:W.loginManager.user.userName, uid:uid, room:W.model.chat.attributes.roomName}), method:"POST"};
       WMECADownloadHelper.add(params, function(data) {
         if (data.status == "success") {
         }
@@ -599,16 +599,16 @@ function run_CA() {
     }
   }
   function switchBeta() {
-    if (Waze.Config.marx.server == "https://marx.waze.com:443") {
-      Waze.Config.marx.server = "https://marx-beta.waze.com:443";
+    if (W.Config.marx.server == "https://marx.waze.com:443") {
+      W.Config.marx.server = "https://marx-beta.waze.com:443";
       reloadRoom();
       var icon = document.getElementById("CA-switchBetaIcon");
       if (icon) {
         icon.src = "data:image/png;base64," + betaIcon;
       }
     } else {
-      if (Waze.Config.marx.server == "https://marx-beta.waze.com:443") {
-        Waze.Config.marx.server = "https://marx.waze.com:443";
+      if (W.Config.marx.server == "https://marx-beta.waze.com:443") {
+        W.Config.marx.server = "https://marx.waze.com:443";
         reloadRoom();
         var icon = document.getElementById("CA-switchBetaIcon");
         if (icon) {
@@ -631,8 +631,8 @@ function run_CA() {
     if (roomName == null) {
       return;
     }
-    var theRoom = Waze.model.chat._findOrCreateRoom(roomName);
-    Waze.model.chat.set("room", theRoom);
+    var theRoom = W.model.chat._findOrCreateRoom(roomName);
+    W.model.chat.set("room", theRoom);
   }
   function updateUnreadMessagesDivWidth() {
     var messageDiv = getId("chat").getElementsByClassName("messages");
@@ -641,7 +641,7 @@ function run_CA() {
       messageDiv = messageDiv[0];
       unreadMessageDiv = unreadMessageDiv[0];
       var unreadMessageDivWidth = parseInt(messageDiv.offsetWidth) - 20;
-      if (Waze.model.chat.attributes.visible == true) {
+      if (W.model.chat.attributes.visible == true) {
         unreadMessageDiv.style.width = unreadMessageDivWidth + "px";
       } else {
         unreadMessageDiv.style.width = "";
@@ -662,8 +662,8 @@ function run_CA() {
     data += "<html><body>";
     var datatxt = "";
     var databb = "";
-    for (var i = 0; i < Waze.model.chat.messages.models.length; i++) {
-      var message = Waze.model.chat.messages.models[i];
+    for (var i = 0; i < W.model.chat.messages.models.length; i++) {
+      var message = W.model.chat.messages.models[i];
       var date = null;
       if (message.hasOwnProperty("chatAddonTimeStamp")) {
         date = message.chatAddonTimeStamp.toLocaleString();
@@ -714,7 +714,7 @@ function run_CA() {
     nameMarker.style.padding = "5px";
     nameMarker.style.zIndex = 3;
     nameMarker.innerHTML = u.attributes.name.replace(/-/gi, "&#x2011;") + "&nbsp;(" + usrRank + ')<div style="top: 27px;" class="tooltip-arrow"></div>';
-    var marker = Waze.map.getLayerByUniqueName("live_users").markers.find(function(e) {
+    var marker = W.map.getLayerByUniqueName("live_users").markers.find(function(e) {
       return e.model.attributes.name == u.attributes.name;
     });
     if (typeof marker != "undefined") {
@@ -734,13 +734,13 @@ function run_CA() {
     }
   }
   function resetUserActivity(userName) {
-    if (userName == Waze.loginManager.user.userName) {
+    if (userName == W.loginManager.user.userName) {
       return;
     }
     var user = null;
-    for (var i = 0; i < Waze.model.chat.users.models.length; i++) {
-      if (Waze.model.chat.users.models[i].attributes.name == userName) {
-        user = Waze.model.chat.users.models[i];
+    for (var i = 0; i < W.model.chat.users.models.length; i++) {
+      if (W.model.chat.users.models[i].attributes.name == userName) {
+        user = W.model.chat.users.models[i];
         break;
       }
     }
@@ -751,9 +751,9 @@ function run_CA() {
     }
   }
   function updateUserActivity() {
-    for (var i = 0; i < Waze.model.chat.users.models.length; i++) {
-      var user = Waze.model.chat.users.models[i];
-      if (user.attributes.name == Waze.loginManager.user.userName) {
+    for (var i = 0; i < W.model.chat.users.models.length; i++) {
+      var user = W.model.chat.users.models[i];
+      if (user.attributes.name == W.loginManager.user.userName) {
         continue;
       }
       if (!userActivity.hasOwnProperty(user.attributes.name)) {
@@ -849,7 +849,7 @@ function run_CA() {
           if (inactivityTime > greenToOrange + orangeToRed) {
             bell.style.backgroundColor = "#FF0000";
           }
-          if (Waze.model.chat.attributes.visible == true) {
+          if (W.model.chat.attributes.visible == true) {
             changeIconUserStatus(bell, 1);
           } else {
             changeIconUserStatus(bell, 0);
@@ -919,7 +919,7 @@ function run_CA() {
     }
   }
   function loadSettings() {
-    CA_Settings = {showDate:true, messageSound:false, messageBGColor:"A1DCF5", alertBGColor:"880000", alertMatch:Waze.loginManager.user.userName, alertSound:false, removeInvisible:false, bipPattern:"@{userName}?", systemMessageOnJoinLeave:false, usernamesMatch:"", usernamesMatchPlaySound:true, sortUserList:0, forceRoom:"", tts:false, tts_language:"en", tts_fromPrefix:"from {userName}", tts_linkTo:"link to {link}", tts_playbackrate:1.0, sortUserListActivity:false, defaultProdChatBetaWME:false, allowUploadStatus:null, 
+    CA_Settings = {showDate:true, messageSound:false, messageBGColor:"A1DCF5", alertBGColor:"880000", alertMatch:W.loginManager.user.userName, alertSound:false, removeInvisible:false, bipPattern:"@{userName}?", systemMessageOnJoinLeave:false, usernamesMatch:"", usernamesMatchPlaySound:true, sortUserList:0, forceRoom:"", tts:false, tts_language:"en", tts_fromPrefix:"from {userName}", tts_linkTo:"link to {link}", tts_playbackrate:1.0, sortUserListActivity:false, defaultProdChatBetaWME:false, allowUploadStatus:null,
     contributeToHistory:false};
     if (typeof localStorage.WMEChatAddon_settings !== "undefined") {
       var settings = JSON.parse(localStorage.WMEChatAddon_settings);
@@ -1010,7 +1010,7 @@ function run_CA() {
           userAlertList[details[0]].outSound.push(details[4]);
         }
       }
-      if (details.length == 1) {
+      if (details.length == 1 && users[i] !== "") {
         var params = {url:"https://docs.google.com/spreadsheets/d/" + users[i] + "/export?format=csv", headers:{"User-Agent":"Mozilla/5.0", "Accept":"text/plain"}, data:null, method:"GET"};
         log("download", params.url);
         WMECADownloadHelper.add(params, function(data) {
@@ -1094,7 +1094,7 @@ function run_CA() {
     panelHTML += '<label><input type="checkbox" id="CA-opt-showdate"' + (CA_Settings.showDate ? " checked" : "") + "> " + tr("Show message date (uncheck for time only)") + "</input></Label><br />";
     panelHTML += "<label>" + tr("My message background color") + ': <input style="height: 25px;" type="text" size="6" maxlength="6" id="CA-opt-messagebg" value="' + CA_Settings.messageBGColor + '" /></Label><br />';
     panelHTML += "<label>" + tr("Alert color") + ': <input style="height: 25px;" type="text" size="6" maxlength="6" id="CA-opt-alertbg" value="' + CA_Settings.alertBGColor + '" /></Label><br />';
-    panelHTML += '<label title="' + tr("words separated by a comma\nCase unsensitive\nBegin and end with $ to match exact word") + "\n\n" + tr("eg") + ":\n" + Waze.loginManager.user.userName + "\n" + tr("or") + "\n" + Waze.loginManager.user.userName + "," + tr("userNameOfAFriend,$unlock$") + '">' + tr("Alert match") + ': <input style="height: 25px;" type="text" size="30" id="CA-opt-alertmatch" value="' + CA_Settings.alertMatch + '" /></Label><br />';
+    panelHTML += '<label title="' + tr("words separated by a comma\nCase unsensitive\nBegin and end with $ to match exact word") + "\n\n" + tr("eg") + ":\n" + W.loginManager.user.userName + "\n" + tr("or") + "\n" + W.loginManager.user.userName + "," + tr("userNameOfAFriend,$unlock$") + '">' + tr("Alert match") + ': <input style="height: 25px;" type="text" size="30" id="CA-opt-alertmatch" value="' + CA_Settings.alertMatch + '" /></Label><br />';
     panelHTML += '<label><input type="checkbox" id="CA-opt-alertsound"' + (CA_Settings.alertSound ? " checked" : "") + "> " + tr("Play sound on new alert") + "</input></Label><br />";
     panelHTML += '<label><input type="checkbox" id="CA-opt-removeinvisibles"' + (CA_Settings.removeInvisible ? " checked" : "") + "> " + tr("Remove messages of users not in the users list of the room") + "</input></Label><br />";
     panelHTML += '<label title="' + tr("{userName} will be replaced by the user's name you click on\n\nEg:\nHey {userName}, come here please!\nor\n@{userName}?") + '">' + tr("Bip pattern (must contain {userName})") + ': <input style="height: 25px;" type="text" size="15" id="CA-opt-bippattern" value="' + CA_Settings.bipPattern + '" /></Label><br />';
@@ -1111,13 +1111,13 @@ function run_CA() {
     if (document.location.host.indexOf("beta") == -1) {
       panelHTML += '<label title="' + tr("Discussion is uploaded to a server and other users will get the 10 last messages on login") + '"><input type="checkbox" id="CA-opt-contributeToHistory"' + (CA_Settings.contributeToHistory ? " checked" : "") + "> " + tr("Contribute to history") + ".</input></Label><br />";
     }
-    if (Waze.loginManager.user.isCountryManager()) {
+    if (W.loginManager.user.isCountryManager()) {
       panelHTML += '<button id="CA-opt-addMeToCMList">' + tr("Add me to CM List") + "</button><br />";
     }
     panelHTML += '<button id="CA-opt-close">' + tr("Save") + "</button>";
     panel.innerHTML = panelHTML;
     getId("map").appendChild(panel);
-    if (Waze.loginManager.user.isCountryManager()) {
+    if (W.loginManager.user.isCountryManager()) {
       getId("CA-opt-addMeToCMList").onclick = addMyselfToCMList;
     }
     getId("CA-opt-close").onclick = function() {
@@ -1132,10 +1132,10 @@ function run_CA() {
   }
   function updateInvisibleHeaderColor() {
     var chatHelper = getChatHelper();
-    if (Waze.model.chat.attributes.visible == false && chatHelper.header.style.backgroundColor == "") {
+    if (W.model.chat.attributes.visible == false && chatHelper.header.style.backgroundColor == "") {
       chatHelper.header.style.backgroundColor = "#c2c2c2";
     }
-    if (Waze.model.chat.attributes.visible == true) {
+    if (W.model.chat.attributes.visible == true) {
       if (chatHelper.header.style.backgroundColor == "rgb(194, 194, 194)") {
         chatHelper.header.style.backgroundColor = "";
       }
@@ -1145,7 +1145,7 @@ function run_CA() {
     if (!CA_Settings.contributeToHistory) {
       return;
     }
-    history.push({room:Waze.model.chat.attributes.roomName, username:msg.attributes.from.name, datetime:msg.attributes.from.lastUpdate, message:msg.attributes.body});
+    history.push({room:W.model.chat.attributes.roomName, username:msg.attributes.from.name, datetime:msg.attributes.from.lastUpdate, message:msg.attributes.body});
     if (history.length >= msgCountPerUpload) {
       uploadHistory();
     }
@@ -1154,7 +1154,7 @@ function run_CA() {
     if (!CA_Settings.contributeToHistory) {
       return;
     }
-    var params = {url:"http://waze.lesduts.info/clog/postHistory.php", headers:{"Content-Type":"application/json"}, data:JSON.stringify({user:Waze.loginManager.user.userName, uid:uid, room:Waze.model.chat.attributes.roomName, history:history}), method:"POST"};
+    var params = {url:"http://waze.lesduts.info/clog/postHistory.php", headers:{"Content-Type":"application/json"}, data:JSON.stringify({user:W.loginManager.user.userName, uid:uid, room:W.model.chat.attributes.roomName, history:history}), method:"POST"};
     WMECADownloadHelper.add(params, function(data) {
       if (data.status == "success") {
         try {
@@ -1224,7 +1224,7 @@ function run_CA() {
       return;
     } else {
       var userName = e.attributes.from.name;
-      if (userName != Waze.loginManager.user.userName) {
+      if (userName != W.loginManager.user.userName) {
         if (!userActivity.hasOwnProperty(userName)) {
           resetUserActivity(userName);
         }
@@ -1237,7 +1237,7 @@ function run_CA() {
     var scrollDown = messageList.offsetHeight + messageList.scrollTop >= messageList.scrollHeight;
     logDebug("ALERT ME iSendAMessage event:", e);
     updateInvisibleHeaderColor();
-    if (e.attributes.from.name == Waze.loginManager.user.userName) {
+    if (e.attributes.from.name == W.loginManager.user.userName) {
       removeAlert();
     }
     if (!isDuplication) {
@@ -1254,7 +1254,7 @@ function run_CA() {
     var chatHelper = getChatHelper();
     if (chatHelper.button != null && chatHelper.header != null) {
       chatHelper.header.setAttribute("CA-alertme", "false");
-      if (Waze.model.chat.attributes.visible == true) {
+      if (W.model.chat.attributes.visible == true) {
         chatHelper.button.style.backgroundColor = "";
         chatHelper.header.style.backgroundColor = "";
       } else {
@@ -1341,18 +1341,18 @@ function run_CA() {
           var liveUserName = userInfos[0];
           lastUserName = liveUserName;
           logDebug("live user infos:", userInfos);
-          if (userInfos.length != 1 && liveUserName != Waze.loginManager.user.userName) {
+          if (userInfos.length != 1 && liveUserName != W.loginManager.user.userName) {
             liveUserName = children[j].firstChild.innerHTML;
           }
           logDebug("live username:", liveUserName);
-          if (liveUserName == Waze.loginManager.user.userName) {
+          if (liveUserName == W.loginManager.user.userName) {
             doNotNotifyNext = true;
           } else {
             doNotNotifyNext = false;
           }
           lastMessageFrom = liveUserName;
           if (CA_Settings.removeInvisible == true && i + 1 >= messages.length) {
-            if (liveUserName != Waze.loginManager.user.userName && liveUserName != "") {
+            if (liveUserName != W.loginManager.user.userName && liveUserName != "") {
               if (getRankOfLiveUser(liveUserName) == null) {
                 messages[i].style.display = "none";
                 doNotNotifyNext = true;
@@ -1363,7 +1363,7 @@ function run_CA() {
           }
         }
         if (children[j].className == "body") {
-          if (lastUserName == Waze.loginManager.user.userName) {
+          if (lastUserName == W.loginManager.user.userName) {
             children[j].style.backgroundColor = "#" + CA_Settings.messageBGColor;
           }
           var list = children[j].children;
@@ -1372,7 +1372,7 @@ function run_CA() {
             logDebug("attribute alertMe:" + chatHelper.header.getAttribute("CA-alertme"));
             logDebug("i+1/messlength:" + (i + 1) + "/" + messages.length);
             var text = list[k].innerHTML;
-            if (i + 1 == messages.length && lastUserName != Waze.loginManager.user.userName && CA_Settings.tts == true) {
+            if (i + 1 == messages.length && lastUserName != W.loginManager.user.userName && CA_Settings.tts == true) {
               var newFromUserName = CA_Settings.tts_fromPrefix.replace(/\{userName\}/gi, lastUserName);
               lastUserName.replace("-", "");
               textForTTS = newFromUserName + ": " + text;
@@ -1390,7 +1390,7 @@ function run_CA() {
                 list[k].innerHTML = newInputs.join("\n");
               }
             }
-            if (i + 1 == messages.length && lastUserName != Waze.loginManager.user.userName && doNotNotifyNext == false) {
+            if (i + 1 == messages.length && lastUserName != W.loginManager.user.userName && doNotNotifyNext == false) {
               logDebug("ALERT ME UNDEFINED on " + text);
               var alertMatch = false;
               var alertPatterns = CA_Settings.alertMatch.split(",");
@@ -1457,8 +1457,8 @@ function run_CA() {
             lastUserName = children[j].innerHTML;
             if (lastUserName != "") {
               var separator = "";
-              if (lastUserName == Waze.loginManager.user.userName) {
-                children[j].innerHTML = children[j].innerHTML + " (" + (Waze.loginManager.user.rank + 1) + ")";
+              if (lastUserName == W.loginManager.user.userName) {
+                children[j].innerHTML = children[j].innerHTML + " (" + (W.loginManager.user.rank + 1) + ")";
               } else {
                 separator = " ";
                 var liveUserRank = getRankOfLiveUser(lastUserName);
@@ -1473,7 +1473,7 @@ function run_CA() {
           } else {
             var userInfos = children[j].innerHTML.split(" ");
             var lastUserName = userInfos[0];
-            if (userInfos.length != 1 && lastUserName != Waze.loginManager.user.userName) {
+            if (userInfos.length != 1 && lastUserName != W.loginManager.user.userName) {
               lastUserName = children[j].firstChild.innerHTML;
             }
           }
@@ -1553,7 +1553,7 @@ function run_CA() {
     convertPermalinksAndLinks();
     setupStopAlertOnKeywords();
     logDebug("Last message: " + lastMessageFrom);
-    if (lastMessageFrom == Waze.loginManager.user.userName || _(Waze.model.chat.messages.models).isEmpty() == false && _(Waze.model.chat.messages.models).last().attributes.type == "system") {
+    if (lastMessageFrom == W.loginManager.user.userName || _(W.model.chat.messages.models).isEmpty() == false && _(W.model.chat.messages.models).last().attributes.type == "system") {
       doNotNotifyNext = true;
     }
   }
@@ -1588,8 +1588,8 @@ function run_CA() {
   }
   function getMessageObjectFromData(userName, message) {
     var res = null;
-    for (var i = 0; i < Waze.model.chat.messages.models.length; i++) {
-      res = Waze.model.chat.messages.models[i];
+    for (var i = 0; i < W.model.chat.messages.models.length; i++) {
+      res = W.model.chat.messages.models[i];
       if (res.attributes.body == message && res.attributes.from.name == userName) {
         return res;
       }
@@ -1629,17 +1629,17 @@ function run_CA() {
     return {lon:lon == null ? null : lon.length == 2 ? parseFloat(lon[1]) : null, lat:lat == null ? null : lat.length == 2 ? parseFloat(lat[1]) : null, zoom:zoom == null ? null : zoom.length == 2 ? parseFloat(zoom[1]) : null, segments:segments ? segments[1].split(",") : null, nodes:nodes ? nodes[1].split(",") : null, venues:venues ? venues[1].split(",") : null, mapUpdateRequest:mapUpdateRequest ? mapUpdateRequest[1].split(",") : null};
   }
   function getRankOfLiveUser(userName) {
-    for (var i = 0; i < Waze.model.chat.users.models.length; i++) {
-      if (Waze.model.chat.users.models[i].attributes.name == userName) {
-        return Waze.model.chat.users.models[i].attributes.rank;
+    for (var i = 0; i < W.model.chat.users.models.length; i++) {
+      if (W.model.chat.users.models[i].attributes.name == userName) {
+        return W.model.chat.users.models[i].attributes.rank;
       }
     }
     return null;
   }
   function jumpToUser(userName) {
     var user = null;
-    for (var i = 0; i < Waze.model.chat.users.models.length; i++) {
-      user = Waze.model.chat.users.models[i];
+    for (var i = 0; i < W.model.chat.users.models.length; i++) {
+      user = W.model.chat.users.models[i];
       if (user.attributes.name == userName) {
         break;
       } else {
@@ -1655,12 +1655,12 @@ function run_CA() {
   }
   function jumpTo(jumpSet) {
     logDebug("jumping to: ", jumpSet);
-    Waze.selectionManager.unselectAll();
+    W.selectionManager.unselectAll();
     if (typeof ChatJumper !== "undefined") {
       if (ChatJumper.isLast) {
       } else {
-        var c = Waze.map.getCenter();
-        var zoom = Waze.map.getZoom();
+        var c = W.map.getCenter();
+        var zoom = W.map.getZoom();
         ChatJumper.last = [c.lon, c.lat];
         ChatJumper.zoom = zoom;
         ChatJumper.isLast = true;
@@ -1671,13 +1671,13 @@ function run_CA() {
     selectDataWaitForMergeEnd = false;
     if (jumpSet.segments || jumpSet.nodes || jumpSet.venues || jumpSet.mapUpdateRequest) {
       currentJumpSet = jumpSet;
-      Waze.model.events.register("mergestart", null, mergestart);
+      W.model.events.register("mergestart", null, mergestart);
     }
     var xy = OpenLayers.Layer.SphericalMercator.forwardMercator(jumpSet.lon, jumpSet.lat);
     if (jumpSet.zoom) {
-      Waze.map.setCenter(xy, jumpSet.zoom);
+      W.map.setCenter(xy, jumpSet.zoom);
     } else {
-      Waze.map.setCenter(xy);
+      W.map.setCenter(xy);
     }
     if (jumpSet.segments || jumpSet.nodes || jumpSet.venues || jumpSet.mapUpdateRequest) {
       window.setTimeout(getFunctionWithArgs(selectData, [jumpSet]), 500);
@@ -1687,8 +1687,8 @@ function run_CA() {
     try {
       log("Permalink is far!");
       selectDataWaitForMergeEnd = true;
-      Waze.model.events.unregister("mergestart", null, mergestart);
-      Waze.model.events.register("mergeend", null, mergeend);
+      W.model.events.unregister("mergestart", null, mergestart);
+      W.model.events.register("mergeend", null, mergeend);
     } catch (e) {
       logError("Error:", e);
     }
@@ -1696,7 +1696,7 @@ function run_CA() {
   function mergeend() {
     try {
       log("Data loaded, now, try to select data if any...");
-      Waze.model.events.unregister("mergeend", null, mergeend);
+      W.model.events.unregister("mergeend", null, mergeend);
       selectDataWaitForMergeEnd = false;
       selectData(currentJumpSet);
     } catch (e) {
@@ -1708,8 +1708,8 @@ function run_CA() {
       log("waiting for data...");
       return;
     }
-    Waze.model.events.unregister("mergestart", null, mergestart);
-    Waze.model.events.unregister("mergeend", null, mergeend);
+    W.model.events.unregister("mergestart", null, mergestart);
+    W.model.events.unregister("mergeend", null, mergeend);
     var success = true;
     var notFound = [];
     var elements = 0;
@@ -1717,50 +1717,50 @@ function run_CA() {
       var segs = [];
       for (var i = 0; i < jumpSet.segments.length; i++) {
         var segId = parseInt(jumpSet.segments[i]);
-        if (typeof Waze.model.segments.objects[segId] === "undefined") {
+        if (typeof W.model.segments.objects[segId] === "undefined") {
           success = false;
           notFound.push(segId);
         } else {
-          segs.push(Waze.model.segments.objects[segId]);
+          segs.push(W.model.segments.objects[segId]);
         }
       }
       elements = jumpSet.segments.length;
-      Waze.selectionManager.setSelectedModels(segs);
+      W.selectionManager.setSelectedModels(segs);
     }
     if (jumpSet.nodes) {
       var nodes = [];
       for (var i = 0; i < jumpSet.nodes.length; i++) {
         var nodeId = parseInt(jumpSet.nodes[i]);
-        if (typeof Waze.model.nodes.objects[nodeId] === "undefined") {
+        if (typeof W.model.nodes.objects[nodeId] === "undefined") {
           success = false;
           notFound.push(nodeId);
         } else {
-          nodes.push(Waze.model.nodes.objects[nodeId]);
+          nodes.push(W.model.nodes.objects[nodeId]);
         }
       }
       elements = jumpSet.nodes.length;
-      Waze.selectionManager.setSelectedModels(nodes);
+      W.selectionManager.setSelectedModels(nodes);
     }
     if (jumpSet.venues) {
-      Waze.map.landmarkLayer.setVisibility(true);
+      W.map.landmarkLayer.setVisibility(true);
       var venues = [];
       for (var i = 0; i < jumpSet.venues.length; i++) {
         var venueId = jumpSet.venues[i];
-        if (typeof Waze.model.venues.objects[venueId] === "undefined") {
+        if (typeof W.model.venues.objects[venueId] === "undefined") {
           success = false;
           notFound.push(venueId);
         } else {
-          venues.push(Waze.model.venues.objects[venueId]);
+          venues.push(W.model.venues.objects[venueId]);
         }
       }
       elements = jumpSet.venues.length;
-      Waze.selectionManager.setSelectedModels(venues);
+      W.selectionManager.setSelectedModels(venues);
     }
     if (jumpSet.mapUpdateRequest && jumpSet.mapUpdateRequest.length >= 1 && !jumpSet.segments && !jumpSet.nodes && !jumpSet.venues) {
-      var mp = Waze.model.problems.objects[parseInt(jumpSet.mapUpdateRequest[0])];
+      var mp = W.model.problems.objects[parseInt(jumpSet.mapUpdateRequest[0])];
       var tp = null;
       if (mp == null) {
-        tp = Waze.model.turnProblems.objects[parseInt(jumpSet.mapUpdateRequest[0])];
+        tp = W.model.turnProblems.objects[parseInt(jumpSet.mapUpdateRequest[0])];
       }
       logDebug("mp :", mp);
       logDebug("tp :", tp);
@@ -1776,7 +1776,7 @@ function run_CA() {
     if (!success) {
       if (jumpSet.hasOwnProperty("attempt") && jumpSet.attempt >= 2) {
         log("Select data failed...");
-        if (confirm("Some elements can't be found.\nSelection: " + Waze.selectionManager.getSelectedFeatures.length + "/" + elements + "\nNot found: " + (notFound.length != 0 ? "Elements ids: " + notFound.join(", ") + "\n" : "") + "Try again to select elements?")) {
+        if (confirm("Some elements can't be found.\nSelection: " + W.selectionManager.getSelectedFeatures.length + "/" + elements + "\nNot found: " + (notFound.length != 0 ? "Elements ids: " + notFound.join(", ") + "\n" : "") + "Try again to select elements?")) {
           window.setTimeout(getFunctionWithArgs(selectData, [jumpSet]), 500);
         }
         return;
@@ -1797,7 +1797,7 @@ function run_CA() {
     if (userLists.length == 1) {
       var userList = userLists[0];
       var users = userList.children;
-      if (users.length == 0 || users.length == 1 && Waze.model.chat.attributes.visible) {
+      if (users.length == 0 || users.length == 1 && W.model.chat.attributes.visible) {
         window.setTimeout(setupBells, 500);
         return;
       }
@@ -1806,13 +1806,13 @@ function run_CA() {
         if (user.childNodes.length == 1 || user.childNodes.length == 2 && user.childNodes[1].nodeName == "HR") {
           var userId = user.firstChild.getAttribute("data-id");
           var userName = "";
-          for (var i = 0; i < Waze.model.chat.users.models.length; i++) {
-            if (Waze.model.chat.users.models[i].attributes.id == userId) {
-              userName = Waze.model.chat.users.models[i].attributes.name;
+          for (var i = 0; i < W.model.chat.users.models.length; i++) {
+            if (W.model.chat.users.models[i].attributes.id == userId) {
+              userName = W.model.chat.users.models[i].attributes.name;
               break;
             }
           }
-          if (userName != Waze.loginManager.user.userName && userName != "") {
+          if (userName != W.loginManager.user.userName && userName != "") {
             var bell = document.createElement("a");
             bell.href = "#";
             bell.id = "CA-bell-" + userName;
@@ -1836,7 +1836,7 @@ function run_CA() {
             bell.style.margin = "0px";
             bell.style.padding = "0px";
             bell.style.marginLeft = "-15px";
-            if (Waze.model.chat.attributes.visible == true) {
+            if (W.model.chat.attributes.visible == true) {
               bell.onclick = getFunctionWithArgs(bipUser, [userName]);
             }
             user.insertBefore(bell, user.firstChild);
@@ -1847,13 +1847,13 @@ function run_CA() {
             if (bell.onclick == null) {
               var userId = user.childNodes[1].getAttribute("data-id");
               var userName = "";
-              for (var i = 0; i < Waze.model.chat.users.models.length; i++) {
-                if (Waze.model.chat.users.models[i].attributes.id == userId) {
-                  userName = Waze.model.chat.users.models[i].attributes.name;
+              for (var i = 0; i < W.model.chat.users.models.length; i++) {
+                if (W.model.chat.users.models[i].attributes.id == userId) {
+                  userName = W.model.chat.users.models[i].attributes.name;
                   break;
                 }
               }
-              if (userName != Waze.loginManager.user.userName && userName != "") {
+              if (userName != W.loginManager.user.userName && userName != "") {
                 bell.onclick = getFunctionWithArgs(bipUser, [userName]);
               }
             }
@@ -1866,7 +1866,7 @@ function run_CA() {
     log(e.attributes.name + " has joined");
     setupBells();
     var messageDisplayed = false;
-    if (e.attributes.name != Waze.loginManager.user.userName && CA_Settings.usernamesMatch.length != 0) {
+    if (e.attributes.name != W.loginManager.user.userName && CA_Settings.usernamesMatch.length != 0) {
       if (userAlertList.hasOwnProperty(e.attributes.name) == true) {
         var details = userAlertList[e.attributes.name];
         for (var i = 0; i < details.inMessage.length; i++) {
@@ -1886,10 +1886,10 @@ function run_CA() {
         }
       }
     }
-    if (e.attributes.name != Waze.loginManager.user.userName && CA_Settings.systemMessageOnJoinLeave == true && !messageDisplayed) {
+    if (e.attributes.name != W.loginManager.user.userName && CA_Settings.systemMessageOnJoinLeave == true && !messageDisplayed) {
       addSystemMessage(e.attributes.name + " (" + (e.attributes.rank + 1) + ") " + tr("has joined"), "smaller");
     }
-    if (e.attributes.name == Waze.loginManager.user.userName) {
+    if (e.attributes.name == W.loginManager.user.userName) {
       getId("chat").getElementsByClassName("message-list")[0].style.maxHeight = "250px";
     }
     sortUserList();
@@ -1914,7 +1914,7 @@ function run_CA() {
       bell.parentNode.removeChild(bell);
     }
     var messageDisplayed = false;
-    if (e.attributes.name != Waze.loginManager.user.userName && CA_Settings.usernamesMatch.length != 0) {
+    if (e.attributes.name != W.loginManager.user.userName && CA_Settings.usernamesMatch.length != 0) {
       if (userAlertList.hasOwnProperty(e.attributes.name) == true) {
         var details = userAlertList[e.attributes.name];
         for (var i = 0; i < details.outMessage.length; i++) {
@@ -1934,10 +1934,10 @@ function run_CA() {
         }
       }
     }
-    if (e.attributes.name != Waze.loginManager.user.userName && CA_Settings.systemMessageOnJoinLeave == true && !messageDisplayed) {
+    if (e.attributes.name != W.loginManager.user.userName && CA_Settings.systemMessageOnJoinLeave == true && !messageDisplayed) {
       addSystemMessage(e.attributes.name + " (" + (e.attributes.rank + 1) + ") " + tr("has left"), "smaller");
     }
-    if (e.attributes.name == Waze.loginManager.user.userName) {
+    if (e.attributes.name == W.loginManager.user.userName) {
       getId("chat").getElementsByClassName("message-list")[0].style.maxHeight = "290px";
       setupBells();
     }
@@ -1998,7 +1998,7 @@ function run_CA() {
     return false;
   }
   function isCM(username) {
-    if (CMList != null && Waze.model.hasOwnProperty("countries") && Waze.model.countries && Waze.model.countries.hasOwnProperty("top") && Waze.model.countries.top && Waze.model.countries.top.hasOwnProperty("id") && CMList.hasOwnProperty(Waze.model.countries.top.id) && CMList[Waze.model.countries.top.id].indexOf(username) != -1) {
+    if (CMList != null && W.model.hasOwnProperty("countries") && W.model.countries && W.model.countries.hasOwnProperty("top") && W.model.countries.top && W.model.countries.top.hasOwnProperty("id") && CMList.hasOwnProperty(W.model.countries.top.id) && CMList[W.model.countries.top.id].indexOf(username) != -1) {
       return true;
     }
     return false;
@@ -2138,16 +2138,16 @@ function run_CA() {
               if (sortMode == 3) {
                 var userObj = null;
                 var nextuserObj = null;
-                for (var u = 0; u < Waze.model.chat.users.models.length; u++) {
-                  if (Waze.model.chat.users.models[u].attributes.name == realUserName) {
-                    userObj = Waze.model.chat.users.models[u];
+                for (var u = 0; u < W.model.chat.users.models.length; u++) {
+                  if (W.model.chat.users.models[u].attributes.name == realUserName) {
+                    userObj = W.model.chat.users.models[u];
                     if (nextuserObj != null) {
                       break;
                     }
                     continue;
                   }
-                  if (Waze.model.chat.users.models[u].attributes.name == nextRealUserName) {
-                    nextuserObj = Waze.model.chat.users.models[u];
+                  if (W.model.chat.users.models[u].attributes.name == nextRealUserName) {
+                    nextuserObj = W.model.chat.users.models[u];
                     if (userObj != null) {
                       break;
                     }
@@ -2157,11 +2157,11 @@ function run_CA() {
                 if (userObj != null && nextuserObj != null) {
                   var du = 0;
                   var dnu = 0;
-                  var myPosition = OpenLayers.Layer.SphericalMercator.inverseMercator(Waze.map.getCenter().lon, Waze.map.getCenter().lat);
-                  if (userObj.attributes.name == Waze.loginManager.user.userName) {
+                  var myPosition = OpenLayers.Layer.SphericalMercator.inverseMercator(W.map.getCenter().lon, W.map.getCenter().lat);
+                  if (userObj.attributes.name == W.loginManager.user.userName) {
                     continue;
                   }
-                  if (nextuserObj.attributes.name == Waze.loginManager.user.userName) {
+                  if (nextuserObj.attributes.name == W.loginManager.user.userName) {
                     dnu = 0;
                   } else {
                     dnu = (myPosition.lon - nextuserObj.attributes.center.lon) * (myPosition.lon - nextuserObj.attributes.center.lon) + (myPosition.lat - nextuserObj.attributes.center.lat) * (myPosition.lat - nextuserObj.attributes.center.lat);
@@ -2217,13 +2217,13 @@ function run_CA() {
   }
   function resetChatSocket(params) {
     log("Reset chat socket");
-    Waze.model.chat._marx.socket.removeAllListeners();
+    W.model.chat._marx.socket.removeAllListeners();
     try {
-      Waze.model.chat._marx.socket.socket.disconnect();
+      W.model.chat._marx.socket.socket.disconnect();
     } catch (e) {
       logError("chat disconnect:", e);
     }
-    if (Waze.model.chat._marx.socket.socket.connected == true || Waze.model.chat._marx.socket.socket.open == true) {
+    if (W.model.chat._marx.socket.socket.connected == true || W.model.chat._marx.socket.socket.open == true) {
       log("wait for disconnection...");
       window.setTimeout(function() {
         resetChatSocket(params);
@@ -2231,39 +2231,39 @@ function run_CA() {
       });
       return;
     }
-    delete io.sockets[Waze.Config.marx.server];
+    delete io.sockets[W.Config.marx.server];
     var status = {NotConnected:0, FirstConnection:1, Reconnection:2};
     var t = {};
     t.sessionId = $.cookie(W.loginManager.getAuthCookieName());
-    var address = Waze.Config.marx.server + "/chat?" + $.param(t);
+    var address = W.Config.marx.server + "/chat?" + $.param(t);
     var socket = io.connect(address, {"try multiple transports":!1, "force new connection":true, "forceNew":true});
     socket.on("connect", function(e) {
       return function() {
         return e.mode === status.NotConnected ? (e.mode = status.FirstConnection, e.trigger("firstConnect")) : (e.mode = status.Reconnection, e.trigger("reconnect"));
       };
-    }(Waze.model.chat._marx));
+    }(W.model.chat._marx));
     socket.on("disconnect", function(e) {
       return function() {
         return e.trigger("disconnect");
       };
-    }(Waze.model.chat._marx));
+    }(W.model.chat._marx));
     socket.on("connect_error", function(e) {
       return function() {
         log("socket connection error: ", e);
       };
-    }(Waze.model.chat._marx));
-    io.sockets[Waze.Config.marx.server] = socket.socket;
-    Waze.model.chat._marx.socket = socket;
-    Waze.model.liveUsers._marx.socket = socket;
-    Waze.model.chat._registerSocketEvents();
-    Waze.model.liveUsers._registerMarxEvents();
+    }(W.model.chat._marx));
+    io.sockets[W.Config.marx.server] = socket.socket;
+    W.model.chat._marx.socket = socket;
+    W.model.liveUsers._marx.socket = socket;
+    W.model.chat._registerSocketEvents();
+    W.model.liveUsers._registerMarxEvents();
     if (params && params.hasOwnProperty("onSuccess") == true) {
       params.onSuccess();
     }
   }
   function roomChanged(e) {
     if (arguments.length == 0) {
-      e = {attributes:{roomName:Waze.model.chat.attributes.room.attributes.name}};
+      e = {attributes:{roomName:W.model.chat.attributes.room.attributes.name}};
     }
     window.setTimeout(function() {
       resetChatSocket();
