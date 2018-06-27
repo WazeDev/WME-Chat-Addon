@@ -64,7 +64,7 @@ $transRoomNameFromHR2DB=array(' ' => '_');
 
 $data = json_decode(file_get_contents('php://input'));
 
-if (gettype($data)=="array") // previous version of chataddon
+if (gettype($data)=="array") /* previous version of chataddon*/
     die();
 
 if (property_exists($data, "user")==false)
@@ -73,13 +73,13 @@ if (property_exists($data, "user")==false)
 // set in shmem users connected
 if ($data->room=="France")
 {
-    // read shared memory
+    /* read shared memory*/
     $shmem_max_size=262144; // 1 MB
 
     $shmem_id=shmop_open(0xff01, "c", 0644, $shmem_max_size);
 
     $string = trim(shmop_read ($shmem_id , 0 , $shmem_max_size ));
-    //var_dump($string);
+    /*var_dump($string);*/
 
     $shmem_data = null;
 
@@ -99,7 +99,7 @@ if ($data->room=="France")
     $user=$data->user;
     if ($shmem_data!=null)
     {
-        // I take the lead!
+        /* I take the lead!*/
         $shmem_data->$user=time();
         $shmem_string=str_pad(json_encode($shmem_data), $shmem_max_size);
         shmop_write ( $shmem_id , $shmem_string , 0 );
@@ -108,15 +108,15 @@ if ($data->room=="France")
     shmop_close($shmem_id);
 }
 
-if (property_exists($data, "history")==false) // heartbeat
+if (property_exists($data, "history")==false) /* heartbeat*/
 {
-    // read shared memory
-    $shmem_max_size=262144; // 1 MB
+    /* read shared memory*/
+    $shmem_max_size=262144; /* 1 MB*/
 
     $shmem_id=shmop_open(0xff00, "c", 0644, $shmem_max_size);
 
     $string = trim(shmop_read ($shmem_id , 0 , $shmem_max_size ));
-    //var_dump($string);
+    /*var_dump($string);*/
 
     $shmem_data = null;
 
@@ -151,7 +151,7 @@ if (property_exists($data, "history")==false) // heartbeat
         }
         else
         {
-            // I take the lead!
+            /* I take the lead!*/
             $shmem_data->$room=new stdClass();
             $shmem_data->$room->leader=$data->user . '_' . $data->uid;
             $shmem_data->$room->ts=time();
@@ -164,18 +164,18 @@ if (property_exists($data, "history")==false) // heartbeat
 
     shmop_close($shmem_id);
     die();
-} // end of heartbeat
+} /* end of heartbeat*/
 
 
 
 
 $link = mysql_connect("localhost", "clog", "hT5_sX23");
-//var_dump ($link);
+/*var_dump ($link);*/
 
 function getAvailableRooms($link)
 {
 	$roomList = array();
-	//$db_selected = mysql_select_db('information_schema', $link);
+	/*$db_selected = mysql_select_db('information_schema', $link);*/
 	$query="SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA='clog'";
 	$result = mysql_query($query, $link);
 	if (!$result)
@@ -188,8 +188,8 @@ function getAvailableRooms($link)
 			if (endsWith($row['TABLE_NAME'], '_room'))
 			{
 				array_push($roomList, $row['TABLE_NAME']);
-//				$roomName = substr($row['TABLE_NAME'], 0, strlen($row['TABLE_NAME'])-5);
-				//$roomName=strtr($roomName, $transRoomNameFromDB2HR);
+/*				$roomName = substr($row['TABLE_NAME'], 0, strlen($row['TABLE_NAME'])-5);
+				$roomName=strtr($roomName, $transRoomNameFromDB2HR);*/
 			}
 			
 	}
@@ -201,7 +201,7 @@ function get_ip_address(){
     foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
         if (array_key_exists($key, $_SERVER) === true){
             foreach (explode(',', $_SERVER[$key]) as $ip){
-                $ip = trim($ip); // just to be safe
+                $ip = trim($ip); /* just to be safe*/
 
                 if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
                     return $ip;
@@ -216,7 +216,7 @@ $db_selected = mysql_select_db('clog', $link);
 $query="SET NAMES 'utf8'";
 $result = mysql_query($query, $link);
 
-//$data = json_decode(file_get_contents('php://input'));
+/*$data = json_decode(file_get_contents('php://input'));*/
 
 $debug=false;
 if ($data==null)
@@ -253,46 +253,46 @@ $data = json_decode('{"user":"dummyd2","room":"France","history":
 }
 }
 
-//error_log(json_encode($data));
-//error_log(gettype($data));
+/*error_log(json_encode($data));*/
+/*error_log(gettype($data));*/
 
 if (gettype($data)=="array")
     die();
 
-//error_log($data->user);
+/*error_log($data->user);*/
 
 if (property_exists($data, "user")==false)
     die();
 
-//error_log($data->user);
+/*error_log($data->user);*/
 
-//if ($data->user!="dummyd2")
+/*if ($data->user!="dummyd2")*/
 
-// read shared memory
+/* read shared memory*/
 $shmem_max_size=262144;
 
 $shmem_id=shmop_open(0xff00, "c", 0644, $shmem_max_size);
 
 $string = trim(shmop_read ($shmem_id , 0 , $shmem_max_size ));
-//var_dump($string);
+/*var_dump($string);*/
 
 $shmem_data = null;
 
 if ($string == "")
 {
     $shmem_data=new stdClass();
-    //error_log("leaders new class");
+    /*error_log("leaders new class");*/
 }
 else
 {
     try {
         $shmem_data=json_decode($string);
-        //error_log(print_r($shmem_data, 1));
+        /*error_log(print_r($shmem_data, 1));*/
     }
     catch (Exception $e)
     {
         var_dump($e);
-        //error_log("leaders bad json");
+        /*error_log("leaders bad json");*/
         $shmem_data=new stdClass();
     }
 }
@@ -300,13 +300,13 @@ else
 $currentLeader=null;
 $currentRoom=$data->room;
 
-//if ($shmem_data!=null)
+/*if ($shmem_data!=null)*/
 {
     if (property_exists($shmem_data, $currentRoom)==true)
     {
         if ((time() - $shmem_data->$currentRoom->ts)<4)
             $currentLeader=$shmem_data->$currentRoom->leader;
-        else // I take the lead
+        else /* I take the lead*/
         {
             $shmem_data->$currentRoom->leader=$data->user . '_' . $data->uid;
             $shmem_data->$currentRoom->ts=time();
@@ -317,7 +317,7 @@ $currentRoom=$data->room;
     }
     else
     {
-        // I take the lead!
+        /* I take the lead!*/
         $shmem_data->$currentRoom=new stdClass();
         $shmem_data->$currentRoom->leader=$data->user . '_' . $data->uid;
         $shmem_data->$currentRoom->ts=time();
@@ -329,7 +329,7 @@ $currentRoom=$data->room;
 }
 
 
-if ($currentLeader==null || $currentLeader!=$data->user . '_' . $data->uid) // if troubles with leader or if I'm not the leader
+if ($currentLeader==null || $currentLeader!=$data->user . '_' . $data->uid) /* if troubles with leader or if I'm not the leader*/
 {
     shmop_close($shmem_id);
     if ($currentLeader==null)
@@ -347,13 +347,13 @@ $data=json_decode(json_encode($data->history), true);
 
 
 $now = gmdate("Y-m-d\TH:i:s\.000\Z");
-//var_dump($data);
+/*var_dump($data);*/
 for ($i=0; $i<count($data); $i++)
 {
 	$query="UNLOCK TABLES";
 	$result = mysql_query($query, $link);
 	
-	// remove incoming duplicated messages
+	/* remove incoming duplicated messages*/
 	/*
 	$pos=0;
 	while ($pos < count($splitedMessage))
@@ -372,21 +372,21 @@ for ($i=0; $i<count($data); $i++)
 	$data[$i]['message']=removeDuplicates($data[$i]['message']);
 	
 	
-	//if ($debug) var_dump(utf8_decode($data[$i]['message']));
-	//$room = mysql_real_escape_string(utf8_decode($data[$i]['room']));
+	/*if ($debug) var_dump(utf8_decode($data[$i]['message']));
+	$room = mysql_real_escape_string(utf8_decode($data[$i]['room']));*/
 	$room = mysql_real_escape_string($data[$i]['room']);
-	//$message = mysql_real_escape_string(utf8_decode($data[$i]['message']));
+	/*$message = mysql_real_escape_string(utf8_decode($data[$i]['message']));*/
 	$message = mysql_real_escape_string($data[$i]['message']);
-	//$username = mysql_real_escape_string(utf8_decode($data[$i]['username']));
+	/*$username = mysql_real_escape_string(utf8_decode($data[$i]['username']));*/
 	$username = mysql_real_escape_string($data[$i]['username']);
-	//$datetime = mysql_real_escape_string(utf8_decode($data[$i]['datetime']));
-	//$datetime = mysql_real_escape_string($data[$i]['datetime']);
+	/*$datetime = mysql_real_escape_string(utf8_decode($data[$i]['datetime']));
+	$datetime = mysql_real_escape_string($data[$i]['datetime']);*/
 	
-	//if ($debug)	var_dump($data);
-//    if ($room!="France")
-//        die();
+	/*if ($debug)	var_dump($data);
+    if ($room!="France")
+        die();*/
 
-	//$message = $data[$i]['message'];
+	/*$message = $data[$i]['message'];*/
 
 	$availableRooms=getAvailableRooms($link);
 	
@@ -420,14 +420,14 @@ for ($i=0; $i<count($data); $i++)
 
 	my_var_dump("current message", $data[$i]);
 
-	// get last message:
-	$query="SELECT * FROM " . $table . // . " WHERE " . 
-				 //"room='" . $data[$i]['room'] . "' " . 
-				 //"AND username='" . $data[$i]['username'] . "' " . 
-				 //"AND message LIKE '%" . mysql_real_escape_string($data[$i]['message']) . "%' " .
-				 //"AND datetime>DATE_SUB('" . $now . "', INTERVAL 4 SECOND)";
+	/* get last message:*/
+	$query="SELECT * FROM " . $table . /* . " WHERE " . 
+				 "room='" . $data[$i]['room'] . "' " . 
+				 "AND username='" . $data[$i]['username'] . "' " . 
+				 "AND message LIKE '%" . mysql_real_escape_string($data[$i]['message']) . "%' " .
+				 "AND datetime>DATE_SUB('" . $now . "', INTERVAL 4 SECOND)";*/
 				 " ORDER BY datetime DESC LIMIT 1";
-	//echo $query;
+	/*echo $query;*/
 	$lastMessage=null;
   my_var_dump("query last message" , $query);
 	$result = mysql_query($query, $link);
@@ -438,12 +438,12 @@ for ($i=0; $i<count($data); $i++)
 	my_var_dump("lastmessage", $lastMessage);
 	
 	$query="SELECT * FROM " . $table . " WHERE " . 
-				 // "room='" . $data[$i]['room'] . "' " . 
+				 /* "room='" . $data[$i]['room'] . "' " . */
 				 "username='" . $data[$i]['username'] . "' " . 
-				 //"AND message LIKE '%" . mysql_real_escape_string($data[$i]['message']) . "%' " .
+				 /*"AND message LIKE '%" . mysql_real_escape_string($data[$i]['message']) . "%' " .*/
 				 "AND datetime>DATE_SUB('" . $now . "', INTERVAL 4 SECOND)";
 				 " ORDER BY datetime DESC";
-	//echo $query;
+	/*echo $query;*/
   my_var_dump("query last per date 4 sec", $query);
 	$result = mysql_query($query, $link);
 	my_var_dump("result", $result);
@@ -453,18 +453,18 @@ for ($i=0; $i<count($data); $i++)
 	$toConcat = null;
 	while ($row = mysql_fetch_assoc($result))
 	{
-		//my_var_dump("row", $row);
-		//my_var_dump("utf8_encode(\$row['message'])", utf8_encode($row['message']));
-		//if (utf8_encode($row['message']) == $data[$i]['message'] ||
-		//		startsWith(utf8_encode($row['message']), $data[$i]['message']))
-		if (//strcmp($row['message'], $data[$i]['message'])==0 ||
+		/*my_var_dump("row", $row);
+		my_var_dump("utf8_encode(\$row['message'])", utf8_encode($row['message']));
+		if (utf8_encode($row['message']) == $data[$i]['message'] ||
+				startsWith(utf8_encode($row['message']), $data[$i]['message']))*/
+		if (/*strcmp($row['message'], $data[$i]['message'])==0 ||*/
 				startsWith($row['message'], $data[$i]['message']))
 		{
 			my_var_dump("found true because starts with:", [$row['message'], $data[$i]['message']]);
 			$found=true;
 			break;
 		}
-		//if (startsWith($data[$i]['message'], utf8_encode($row['message'])))
+		/*if (startsWith($data[$i]['message'], utf8_encode($row['message'])))*/
 		if (startsWith($data[$i]['message'], $row['message']))
 		{
 			$toUpdate=$row['id'];
@@ -481,14 +481,14 @@ for ($i=0; $i<count($data); $i++)
 	
 	if ($lastMessage!=null)
 	{
-		//if (startsWith($data[$i]['message'], utf8_encode($lastMessage['message'])) &&
+		/*if (startsWith($data[$i]['message'], utf8_encode($lastMessage['message'])) &&*/
 		if (startsWith($data[$i]['message'], $lastMessage['message']) &&
 				$lastMessage['username']==$data[$i]['username'])
 			$toUpdate=$lastMessage['id'];
 		else if ($lastMessage['username']==$data[$i]['username'])
 			$toConcat=$lastMessage;
 			
-		//if (endsWith(utf8_encode($lastMessage['message']), $data[$i]['message']) &&
+		/*if (endsWith(utf8_encode($lastMessage['message']), $data[$i]['message']) &&*/
 		if (endsWith($lastMessage['message'], $data[$i]['message']) &&
 				$lastMessage['username']==$data[$i]['username'])
 				{
@@ -509,7 +509,7 @@ for ($i=0; $i<count($data); $i++)
 		else if ($toConcat!=null)
 		{
 			my_var_dump("update concat", null);
-			// remove sub messages that appear twice:
+			/* remove sub messages that appear twice:*/
 			$splitedMessage = explode('\n', mysql_real_escape_string($data[$i]['message']));
 			$pos=0;
 			while ($pos < count($splitedMessage))
@@ -524,7 +524,7 @@ for ($i=0; $i<count($data); $i++)
 
 			if (count($splitedMessage)==0)
 			{
-				// all sub messages to be added are already in the DB
+				/* all sub messages to be added are already in the DB*/
 				continue;
 			}
 			$query="UPDATE " . $table . " SET message='" . mysql_real_escape_string($toConcat['message']) . "\n" . mysql_real_escape_string(implode('\n', $splitedMessage)) . "' WHERE id=" . $toConcat['id'];
@@ -549,7 +549,7 @@ for ($i=0; $i<count($data); $i++)
 
 mysql_close($link);
 
-//$row = mysql_fetch_assoc($result);
+/*$row = mysql_fetch_assoc($result);*/
 
 $leadResponse=new stdClass();
 $leadResponse->country=$currentRoom;
