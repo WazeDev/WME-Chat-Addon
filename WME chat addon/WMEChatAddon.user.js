@@ -16,7 +16,7 @@
 // @author			Dummyd2, Seb-D59, WazeDev
 // @copyright       2018, dummyd2, Seb-D59, WazeDev
 // @connect         docs.google.com
-// @connect         waze.lesduts.info
+// @connect         wazedev.com
 // @connect         code.responsivevoice.org
 // ==/UserScript==
 
@@ -111,6 +111,7 @@ function run_CA() {
   var divPerma = null;
   var divChat = null;
   var doNotNotifyNext = false;
+  var serverBase = "http://wazedev.com/chataddon";
   var lastMessageFrom = "";
   var hasUnreadMessages = false;
   var tts_audio = null;
@@ -345,7 +346,7 @@ function run_CA() {
         alert(tr("You are already registered as CM for chat addon."));
       } else {
         if (confirm(tr("Message from Chat addon:\n\nYou are Country Manager.\nDo you allow chat addon to upload to a private server your username and the country(ies) you manage?\nIf you do so, all editors using chat addon will see your name colored in red.\nIf you answer no, you can still change your mind in chat addon settings.\nThanks."))) {
-          var params = {url:"http://waze.lesduts.info/userInfo/set.php?status=CM&username=" + W.loginManager.user.userName + "&clist=" + W.loginManager.user.editableCountryIDs.join(","), headers:{"User-Agent":"Mozilla/5.0", "Accept":"text/plain"}, data:null, method:"GET"};
+          var params = {url:serverBase + "/userInfo/set.php?status=CM&username=" + W.loginManager.user.userName + "&clist=" + W.loginManager.user.editableCountryIDs.join(","), headers:{"User-Agent":"Mozilla/5.0", "Accept":"text/plain"}, data:null, method:"GET"};
           WMECADownloadHelper.add(params, function(data) {
           }, null);
           CA_Settings.allowUploadStatus = true;
@@ -358,7 +359,7 @@ function run_CA() {
     }
   }
   function updateCMList() {
-    var params = {url:"http://waze.lesduts.info/userInfo/get.php?status=CM", headers:{"User-Agent":"Mozilla/5.0", "Accept":"text/plain"}, data:null, method:"GET"};
+    var params = {url:serverBase + "/userInfo/get.php?status=CM", headers:{"User-Agent":"Mozilla/5.0", "Accept":"text/plain"}, data:null, method:"GET"};
     WMECADownloadHelper.add(params, function(data) {
       if (data.status == "success") {
         try {
@@ -591,7 +592,7 @@ function run_CA() {
       uid = generateUUID();
     }
     if (historyLeaders.hasOwnProperty(W.model.chat.attributes.roomName) && historyLeaders[W.model.chat.attributes.roomName] == W.loginManager.user.userName + "_" + uid) {
-      var params = {url:"http://waze.lesduts.info/clog/postHistory.php", headers:{"Content-Type":"application/json"}, data:JSON.stringify({user:W.loginManager.user.userName, uid:uid, room:W.model.chat.attributes.roomName}), method:"POST"};
+      var params = {url:serverBase + "/clog/postHistory.php", headers:{"Content-Type":"application/json"}, data:JSON.stringify({user:W.loginManager.user.userName, uid:uid, room:W.model.chat.attributes.roomName}), method:"POST"};
       WMECADownloadHelper.add(params, function(data) {
         if (data.status == "success") {
         }
@@ -1154,7 +1155,7 @@ function run_CA() {
     if (!CA_Settings.contributeToHistory) {
       return;
     }
-    var params = {url:"http://waze.lesduts.info/clog/postHistory.php", headers:{"Content-Type":"application/json"}, data:JSON.stringify({user:W.loginManager.user.userName, uid:uid, room:W.model.chat.attributes.roomName, history:history}), method:"POST"};
+    var params = {url:serverBase + "/clog/postHistory.php", headers:{"Content-Type":"application/json"}, data:JSON.stringify({user:W.loginManager.user.userName, uid:uid, room:W.model.chat.attributes.roomName, history:history}), method:"POST"};
     WMECADownloadHelper.add(params, function(data) {
       if (data.status == "success") {
         try {
@@ -2288,7 +2289,7 @@ function run_CA() {
     }
     if (document.location.host.indexOf("beta") == -1) {
       log("histo", e);
-      var params = {url:"http://waze.lesduts.info/clog/getHistory.php?room=" + e.attributes.roomName, headers:{"User-Agent":"Mozilla/5.0", "Accept":"text/plain"}, data:null, method:"GET"};
+      var params = {url:serverBase + "/clog/getHistory.php?room=" + e.attributes.roomName, headers:{"User-Agent":"Mozilla/5.0", "Accept":"text/plain"}, data:null, method:"GET"};
       WMECADownloadHelper.add(params, function(data) {
         if (data.status == "success") {
           var wasTTS = CA_Settings.tts;
