@@ -169,22 +169,22 @@ if (property_exists($data, "history")==false) /* heartbeat*/
 
 
 
-$link = mysql_connect("localhost", "clog", "hT5_sX23");
+$link = mysqli_connect("localhost", "clog", "hT5_sX23");
 /*var_dump ($link);*/
 
 function getAvailableRooms($link)
 {
 	$roomList = array();
-	/*$db_selected = mysql_select_db('information_schema', $link);*/
+	/*$db_selected = mysqli_select_db('information_schema', $link);*/
 	$query="SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA='clog'";
-	$result = mysql_query($query, $link);
+	$result = mysqli_query($link, $query);
 	if (!$result)
 	{
-		my_var_dump("Mysql error: " , mysql_error());
+		my_var_dump("Mysql error: " , mysqli_error());
 		return $roomList;
 	}
 
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = mysqli_fetch_assoc($result)) {
 			if (endsWith($row['TABLE_NAME'], '_room'))
 			{
 				array_push($roomList, $row['TABLE_NAME']);
@@ -211,10 +211,10 @@ function get_ip_address(){
     }
 }
 
-$db_selected = mysql_select_db('clog', $link);
+$db_selected = mysqli_select_db($link, 'clog');
 
 $query="SET NAMES 'utf8'";
-$result = mysql_query($query, $link);
+$result = mysqli_query($link, $query);
 
 /*$data = json_decode(file_get_contents('php://input'));*/
 
@@ -351,7 +351,7 @@ $now = gmdate("Y-m-d\TH:i:s\.000\Z");
 for ($i=0; $i<count($data); $i++)
 {
 	$query="UNLOCK TABLES";
-	$result = mysql_query($query, $link);
+	$result = mysqli_query($link, $query);
 	
 	/* remove incoming duplicated messages*/
 	/*
@@ -373,14 +373,14 @@ for ($i=0; $i<count($data); $i++)
 	
 	
 	/*if ($debug) var_dump(utf8_decode($data[$i]['message']));
-	$room = mysql_real_escape_string(utf8_decode($data[$i]['room']));*/
-	$room = mysql_real_escape_string($data[$i]['room']);
-	/*$message = mysql_real_escape_string(utf8_decode($data[$i]['message']));*/
-	$message = mysql_real_escape_string($data[$i]['message']);
-	/*$username = mysql_real_escape_string(utf8_decode($data[$i]['username']));*/
-	$username = mysql_real_escape_string($data[$i]['username']);
-	/*$datetime = mysql_real_escape_string(utf8_decode($data[$i]['datetime']));
-	$datetime = mysql_real_escape_string($data[$i]['datetime']);*/
+	$room = mysqli_real_escape_string(utf8_decode($data[$i]['room']));*/
+	$room = mysqli_real_escape_string($data[$i]['room']);
+	/*$message = mysqli_real_escape_string(utf8_decode($data[$i]['message']));*/
+	$message = mysqli_real_escape_string($data[$i]['message']);
+	/*$username = mysqli_real_escape_string(utf8_decode($data[$i]['username']));*/
+	$username = mysqli_real_escape_string($data[$i]['username']);
+	/*$datetime = mysqli_real_escape_string(utf8_decode($data[$i]['datetime']));
+	$datetime = mysqli_real_escape_string($data[$i]['datetime']);*/
 	
 	/*if ($debug)	var_dump($data);
     if ($room!="France")
@@ -397,23 +397,23 @@ for ($i=0; $i<count($data); $i++)
 	if (!in_array($table, $availableRooms))
 	{
 		$query = "CREATE TABLE IF NOT EXISTS `" . $table . "` ( `id` bigint(20) NOT NULL, `username` text CHARACTER SET utf8 NOT NULL, `message` text CHARACTER SET utf8 NOT NULL, `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP) ENGINE=InnoDB DEFAULT CHARSET=latin1";
-		$result = mysql_query($query, $link);
+		$result = mysqli_query($link, $query);
 		if ($result)
 		{
 			$query = "ALTER TABLE `" . $table . "` ADD PRIMARY KEY (`id`)";
-			$result = mysql_query($query, $link);
+			$result = mysqli_query($link, $query);
 			
 			$query = "ALTER TABLE `" . $table . "` MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT";
-			$result = mysql_query($query, $link);
+			$result = mysqli_query($link, $query);
 		}
 		else
 		{
-			my_var_dump("Error SQL on create table:", mysql_error());
+			my_var_dump("Error SQL on create table:", mysqli_error());
 		}
 	}
 	
 	$query="LOCK TABLES " . $table . " WRITE";
-	$result = mysql_query($query, $link);
+	$result = mysqli_query($link, $query);
 
 	if (!$result)
 		die();
@@ -424,15 +424,15 @@ for ($i=0; $i<count($data); $i++)
 	$query="SELECT * FROM " . $table . /* . " WHERE " . 
 				 "room='" . $data[$i]['room'] . "' " . 
 				 "AND username='" . $data[$i]['username'] . "' " . 
-				 "AND message LIKE '%" . mysql_real_escape_string($data[$i]['message']) . "%' " .
+				 "AND message LIKE '%" . mysqli_real_escape_string($data[$i]['message']) . "%' " .
 				 "AND datetime>DATE_SUB('" . $now . "', INTERVAL 4 SECOND)";*/
 				 " ORDER BY datetime DESC LIMIT 1";
 	/*echo $query;*/
 	$lastMessage=null;
   my_var_dump("query last message" , $query);
-	$result = mysql_query($query, $link);
+	$result = mysqli_query($link, $query);
 	my_var_dump("result", $result);
-	$row = mysql_fetch_assoc($result);
+	$row = mysqli_fetch_assoc($result);
 	if ($row)
 		$lastMessage=$row;
 	my_var_dump("lastmessage", $lastMessage);
@@ -440,18 +440,18 @@ for ($i=0; $i<count($data); $i++)
 	$query="SELECT * FROM " . $table . " WHERE " . 
 				 /* "room='" . $data[$i]['room'] . "' " . */
 				 "username='" . $data[$i]['username'] . "' " . 
-				 /*"AND message LIKE '%" . mysql_real_escape_string($data[$i]['message']) . "%' " .*/
+				 /*"AND message LIKE '%" . mysqli_real_escape_string($data[$i]['message']) . "%' " .*/
 				 "AND datetime>DATE_SUB('" . $now . "', INTERVAL 4 SECOND)";
 				 " ORDER BY datetime DESC";
 	/*echo $query;*/
   my_var_dump("query last per date 4 sec", $query);
-	$result = mysql_query($query, $link);
+	$result = mysqli_query($link, $query);
 	my_var_dump("result", $result);
 	
 	$found = false;
 	$toUpdate = 0;
 	$toConcat = null;
-	while ($row = mysql_fetch_assoc($result))
+	while ($row = mysqli_fetch_assoc($result))
 	{
 		/*my_var_dump("row", $row);
 		my_var_dump("utf8_encode(\$row['message'])", utf8_encode($row['message']));
@@ -475,7 +475,7 @@ for ($i=0; $i<count($data); $i++)
 	if ($found)
 	{
 		$query="UNLOCK TABLES";
-		$result = mysql_query($query, $link);
+		$result = mysqli_query($link, $query);
 		continue;
 	}
 	
@@ -493,7 +493,7 @@ for ($i=0; $i<count($data); $i++)
 				$lastMessage['username']==$data[$i]['username'])
 				{
 					$query="UNLOCK TABLES";
-					$result = mysql_query($query, $link);
+					$result = mysqli_query($link, $query);
 					my_var_dump("found endwith in last message => no db operation", [$lastMessage['message'], $data[$i]['message']]);
 					continue;
 				}
@@ -510,7 +510,7 @@ for ($i=0; $i<count($data); $i++)
 		{
 			my_var_dump("update concat", null);
 			/* remove sub messages that appear twice:*/
-			$splitedMessage = explode('\n', mysql_real_escape_string($data[$i]['message']));
+			$splitedMessage = explode('\n', mysqli_real_escape_string($data[$i]['message']));
 			$pos=0;
 			while ($pos < count($splitedMessage))
 			{
@@ -527,7 +527,7 @@ for ($i=0; $i<count($data); $i++)
 				/* all sub messages to be added are already in the DB*/
 				continue;
 			}
-			$query="UPDATE " . $table . " SET message='" . mysql_real_escape_string($toConcat['message']) . "\n" . mysql_real_escape_string(implode('\n', $splitedMessage)) . "' WHERE id=" . $toConcat['id'];
+			$query="UPDATE " . $table . " SET message='" . mysqli_real_escape_string($toConcat['message']) . "\n" . mysqli_real_escape_string(implode('\n', $splitedMessage)) . "' WHERE id=" . $toConcat['id'];
 		}
 		else
 		{
@@ -535,21 +535,21 @@ for ($i=0; $i<count($data); $i++)
 			$query="INSERT INTO " . $table . " (username, message, datetime) VALUES ('" . $username . "' , '" . $message . "' , UTC_TIMESTAMP())";
 		}
 		my_var_dump("query insert or update", $query);
-		$result = mysql_query($query, $link);
+		$result = mysqli_query($link, $query);
 		my_var_dump("result", $result);
 		if (!$result)
-			my_var_dump("MySQL error:", mysql_error());
+			my_var_dump("MySQL error:", mysqli_error());
 
 	}
 	$query="UNLOCK TABLES";
-	$result = mysql_query($query, $link);
+	$result = mysqli_query($link, $query);
 }
 
 
 
-mysql_close($link);
+mysqli_close($link);
 
-/*$row = mysql_fetch_assoc($result);*/
+/*$row = mysqli_fetch_assoc($result);*/
 
 $leadResponse=new stdClass();
 $leadResponse->country=$currentRoom;
