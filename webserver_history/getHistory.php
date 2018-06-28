@@ -17,7 +17,7 @@ $link = mysql_connect("localhost", "clog", "hT5_sX23");
 $db_selected = mysql_select_db('clog', $link);
 
 $query="SET NAMES 'utf8'";
-$result = mysql_query($query, $link);
+$result = mysql_query($link, $query);
 
 $transRoomNameFromDB2HR=array('_' => ' ');
 $transRoomNameFromHR2DB=array(' ' => '_');
@@ -26,7 +26,7 @@ $table = strtr($room, $transRoomNameFromHR2DB) . "_room";
 
 $query="SELECT * FROM " . $table . " ORDER BY datetime DESC, id DESC LIMIT 0,10";
 /*var_dump($query);*/
-$result = mysql_query($query, $link);
+$result = mysql_query($link, $query);
 if (!$result) /* no history for this room (i.e. no table)? or any other mysql error*/
 {
 	mysql_close($link);
