@@ -2303,7 +2303,7 @@ function run_CA() {
               fakeMsg.style.fontStyle = "italic";
               var utcTS = (new Date(msgs[i].datetime + " UTC")).getTime();
               var localDT = (new Date(utcTS)).toLocaleString();
-              fakeMsg.innerHTML = '<div class="from">' + msgs[i].username + '<span style="float: right; color: #A0A0A0; font-size: smaller;">' + localDT + '</span></div><div class="body"><div style="direction: ltr; text-align: left; color: #A0A0A0">' + msgs[i].message.replace("\n", "<br>") + "</div></div>";
+              fakeMsg.innerHTML = '<div class="from">' + msgs[i].username + '<span style="float: right; color: #A0A0A0; font-size: smaller;">' + localDT + '</span></div><div class="body"><div style="direction: ltr; text-align: left; color: #A0A0A0">' + msgs[i].message.replace(/\n/g, "<br>") + "</div></div>";
               messageList.appendChild(fakeMsg);
             }
             processMessages();
