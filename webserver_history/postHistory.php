@@ -175,12 +175,12 @@ $link = mysqli_connect("localhost", "clog", "hT5_sX23");
 function getAvailableRooms($link)
 {
 	$roomList = array();
-	/*$db_selected = mysqli_select_db('information_schema', $link);*/
+	/*$db_selected = mysqli_select_db($link, 'information_schema');*/
 	$query="SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA='clog'";
 	$result = mysqli_query($link, $query);
 	if (!$result)
 	{
-		my_var_dump("Mysql error: " , mysqli_error());
+		my_var_dump("Mysql error: " , mysqli_error($link));
 		return $roomList;
 	}
 
@@ -373,14 +373,14 @@ for ($i=0; $i<count($data); $i++)
 	
 	
 	/*if ($debug) var_dump(utf8_decode($data[$i]['message']));
-	$room = mysqli_real_escape_string(utf8_decode($data[$i]['room']));*/
-	$room = mysqli_real_escape_string($data[$i]['room']);
-	/*$message = mysqli_real_escape_string(utf8_decode($data[$i]['message']));*/
-	$message = mysqli_real_escape_string($data[$i]['message']);
-	/*$username = mysqli_real_escape_string(utf8_decode($data[$i]['username']));*/
-	$username = mysqli_real_escape_string($data[$i]['username']);
-	/*$datetime = mysqli_real_escape_string(utf8_decode($data[$i]['datetime']));
-	$datetime = mysqli_real_escape_string($data[$i]['datetime']);*/
+	$room = mysqli_real_escape_string($link, utf8_decode($data[$i]['room']));*/
+	$room = mysqli_real_escape_string($link, $data[$i]['room']);
+	/*$message = mysqli_real_escape_string($link, utf8_decode($data[$i]['message']));*/
+	$message = mysqli_real_escape_string($link, $data[$i]['message']);
+	/*$username = mysqli_real_escape_string($link, utf8_decode($data[$i]['username']));*/
+	$username = mysqli_real_escape_string($link, $data[$i]['username']);
+	/*$datetime = mysqli_real_escape_string($link, utf8_decode($data[$i]['datetime']));
+	$datetime = mysqli_real_escape_string($link, $data[$i]['datetime']);*/
 	
 	/*if ($debug)	var_dump($data);
     if ($room!="France")
@@ -408,7 +408,7 @@ for ($i=0; $i<count($data); $i++)
 		}
 		else
 		{
-			my_var_dump("Error SQL on create table:", mysqli_error());
+			my_var_dump("Error SQL on create table:", mysqli_error($link));
 		}
 	}
 	
@@ -424,7 +424,7 @@ for ($i=0; $i<count($data); $i++)
 	$query="SELECT * FROM " . $table . /* . " WHERE " . 
 				 "room='" . $data[$i]['room'] . "' " . 
 				 "AND username='" . $data[$i]['username'] . "' " . 
-				 "AND message LIKE '%" . mysqli_real_escape_string($data[$i]['message']) . "%' " .
+				 "AND message LIKE '%" . mysqli_real_escape_string($link, $data[$i]['message']) . "%' " .
 				 "AND datetime>DATE_SUB('" . $now . "', INTERVAL 4 SECOND)";*/
 				 " ORDER BY datetime DESC LIMIT 1";
 	/*echo $query;*/
@@ -440,7 +440,7 @@ for ($i=0; $i<count($data); $i++)
 	$query="SELECT * FROM " . $table . " WHERE " . 
 				 /* "room='" . $data[$i]['room'] . "' " . */
 				 "username='" . $data[$i]['username'] . "' " . 
-				 /*"AND message LIKE '%" . mysqli_real_escape_string($data[$i]['message']) . "%' " .*/
+				 /*"AND message LIKE '%" . mysqli_real_escape_string($link, $data[$i]['message']) . "%' " .*/
 				 "AND datetime>DATE_SUB('" . $now . "', INTERVAL 4 SECOND)";
 				 " ORDER BY datetime DESC";
 	/*echo $query;*/
@@ -510,7 +510,7 @@ for ($i=0; $i<count($data); $i++)
 		{
 			my_var_dump("update concat", null);
 			/* remove sub messages that appear twice:*/
-			$splitedMessage = explode('\n', mysqli_real_escape_string($data[$i]['message']));
+			$splitedMessage = explode('\n', mysqli_real_escape_string($link, $data[$i]['message']));
 			$pos=0;
 			while ($pos < count($splitedMessage))
 			{
@@ -527,7 +527,7 @@ for ($i=0; $i<count($data); $i++)
 				/* all sub messages to be added are already in the DB*/
 				continue;
 			}
-			$query="UPDATE " . $table . " SET message='" . mysqli_real_escape_string($toConcat['message']) . "\n" . mysqli_real_escape_string(implode('\n', $splitedMessage)) . "' WHERE id=" . $toConcat['id'];
+			$query="UPDATE " . $table . " SET message='" . mysqli_real_escape_string($link, $toConcat['message']) . "\n" . mysqli_real_escape_string($link, implode('\n', $splitedMessage)) . "' WHERE id=" . $toConcat['id'];
 		}
 		else
 		{
