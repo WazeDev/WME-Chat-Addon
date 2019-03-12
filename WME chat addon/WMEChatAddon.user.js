@@ -2,10 +2,8 @@
 // @name 			WME Chat addon
 // @description 	removes duplicates messages, formats link and permalinks, and some stuffs
 // @namespace 		dummyd2
-// @version 		2018.07.05.01
+// @version 		2019.03.12.01
 // @icon			data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAAZiS0dEAAAAAAAA+UO7fwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB94DDg83H1XMMOAAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAEQ0lEQVRYw+2XTUhcVxTHf0+dwcxUHawuxImtH0hbBEebGLCFutGFgSaBriImoXRRBLciqYuKza4bN21dVFcJgouE2IKolIJYP0BmFCwKoyJxksyMTGZ0Zvpax3u6eW+YD40abTftH+7mvnfv/3/OPfecc+G/Du0ca2sBJ5Bv7BMDXgDr/6Tgz4CfgAAQAaIGcQzYB8KAH/gZuHVRpAXAbeAlIIDk5uaKzWZTRUVFUlxcLMXFxVJUVCQ2m03y8vLE/A/wAV8Aljc9gk+AB8BHABUVFTQ0NHDt2jWuXLlCbW0tZWVlKKXw+/14vV4WFxdZWFhgaWlJdnZ2zP0XgF7g17NY/qXhUrHb7aq/v195PB45DZRSsrKyIgMDA2K1Wk1vhAxvnAq3AR2QiooKtba2JkqpNILTIJFIyMbGhqqvr1eGiEOg6yTyauBPQOrq6lQikTgTaaYnRET8fr80NzcLoAzDPn6dgBlA6uvrVTgcfmPyTBHb29tSU1NjHscvgP0o8k8BcTgcanp6+tzkmSJmZ2dNAQcGVxZ+A+TmzZvnZz0GHR0dZjwMAdZU8hLgldVqVUNDQxdmfSZmZmZML2wAhZl3fr+goEBWV1ezXHiUmNMIzLw94XBY7Ha7KaIkJ0XAW0COxWKhqqoqPVtpGpqmMTw8zN27d3ny5Ely/uHDh9y5c4epqSmUUiilePz4Mffu3WNychJN0xCRtH2MYMxKhNeBmMPhkN3d3SxLxsfHpbCwUABxOp3i8Xhkfn4+mXbz8/MlEAiI1+tNzmmaJj6fL22fcDgsNTU1ZhyUpnrgBXB4cHAgq6urAEnlAJubm8TjcQACgQCRSIS1tbXkd13XCYVCbG1tJedEhPX19OKo6zper1cD/jISU1pdeJ6TkyN9fX1ZHvD5fNLa2ipOp1M6OzslGAxKNBqVlpYWKS8vl46ODonH4xKNRqW9vV2cTqfcuHEjKxZGRkZM62ePygXDgDQ1NalgMJi1OBQKidvtlkgkkvy2v78vHo9HYrFYcm5vb0+Wl5dF1/WsQKyurjYF3AdyMgWUmOc3ODiYFv2ZEX/czTjqFpj/9fT0pJbpD49LxQ9MEXNzc+oiMqCIyNjYmFgsFmXUg+9eVwvyzXrQ1NR0IeSPHj0Sh8Nhun4JePukingLEJfLda6sFwwGpaurS9nt9lTyd0/TD1w/j4BQKCS9vb1SWloqmqaZ5z4JlGYS5R1BbgM+B7h8+bLouq6Nj48zOjoqT58+1RKJBC6Xi7a2NmlsbNQqKys5PDzk2bNneDweJiYmcLvd5l7K6Kq+B74GEqex/r7ZvXR3d6urV6+qlCZTjA5YThgxwA18C7x/lnfBV8A3Keo1Y0SM8jkLxI2u6YNj3gW/G2+DdeD5WZrQFoMo05ofgXeOSBoWg/ySMfJf134fh9QYuAT8YVjzEvgBGAFeHbP2wBgXivcAF//jX8TfP8rg1M0AqeYAAAAASUVORK5CYII=
-// @updateURL   	https://greasyfork.org/scripts/369855-wme-chat-addon/code/WME%20Chat%20addon.meta.js
-// @downloadURL 	https://greasyfork.org/scripts/369855-wme-chat-addon/code/WME%20Chat%20addon.user.js
 // @include         https://www.waze.com/editor*
 // @include         https://www.waze.com/*/editor*
 // @include         https://beta.waze.com/*
@@ -921,7 +919,7 @@ function run_CA() {
   }
   function loadSettings() {
     CA_Settings = {showDate:true, messageSound:false, messageBGColor:"A1DCF5", alertBGColor:"880000", alertMatch:W.loginManager.user.userName, alertSound:false, removeInvisible:false, bipPattern:"@{userName}?", systemMessageOnJoinLeave:false, usernamesMatch:"", usernamesMatchPlaySound:true, sortUserList:0, forceRoom:"", tts:false, tts_language:"en", tts_fromPrefix:"from {userName}", tts_linkTo:"link to {link}", tts_playbackrate:1.0, sortUserListActivity:false, defaultProdChatBetaWME:false, allowUploadStatus:null,
-    contributeToHistory:false};
+    contributeToHistory:false, showEditorProfileIcon:false};
     if (typeof localStorage.WMEChatAddon_settings !== "undefined") {
       var settings = JSON.parse(localStorage.WMEChatAddon_settings);
       logDebug("Loading local storage settings:", settings);
@@ -991,8 +989,10 @@ function run_CA() {
       if (typeof settings.contributeToHistory !== "undefined") {
         CA_Settings.contributeToHistory = settings.contributeToHistory;
       }
+        if(typeof settings.showEditorProfileIcon !== "undefined")
+            CA_Settings.showEditorProfileIcon = settings.showEditorProfileIcon;
     }
-    if (CA_Settings.tts_playbackrate < 0.5) {
+      if (CA_Settings.tts_playbackrate < 0.5) {
       CA_Settings.tts_playbackrate = 0.5;
     }
     if (CA_Settings.tts_playbackrate > 2.0) {
@@ -1070,7 +1070,7 @@ function run_CA() {
     }
     CA_Settings = {messageSound:getId("CA-opt-messagesound").checked, showDate:getId("CA-opt-showdate").checked, messageBGColor:messageBG, alertBGColor:alertBG, alertMatch:getId("CA-opt-alertmatch").value, alertSound:getId("CA-opt-alertsound").checked, removeInvisible:getId("CA-opt-removeinvisibles").checked, bipPattern:bipPattern, systemMessageOnJoinLeave:getId("CA-opt-systemmessageonjoinleave").checked, usernamesMatch:getId("CA-opt-usernamesmatch").value, usernamesMatchPlaySound:getId("CA-opt-usernamesmatchplaysound").checked, 
     sortUserList:getId("CA-opt-sortUserList0").checked ? 0 : getId("CA-opt-sortUserList1").checked ? 1 : getId("CA-opt-sortUserList2").checked ? 2 : 3, forceRoom:getId("CA-opt-forceroom").value, tts:getId("CA-opt-tts").checked, tts_language:getId("CA-opt-ttslanguage").value, tts_fromPrefix:getId("CA-opt-ttsfromprefix").value, tts_linkTo:getId("CA-opt-ttslinkto").value, tts_playbackrate:tts_playbackrate, sortUserListActivity:getId("CA-opt-sortUserListActivity").checked, contributeToHistory:document.location.host.indexOf("beta") == 
-    -1 ? getId("CA-opt-contributeToHistory").checked : false};
+    -1 ? getId("CA-opt-contributeToHistory").checked : false, showEditorProfileIcon:getId("CA-opt-showEditorProfileIcon").checked};
     if (document.location.host.indexOf("beta") != -1) {
       CA_Settings.defaultProdChatBetaWME = getId("CA-opt-defaultProdChatBetaWME").checked;
     }
@@ -1106,6 +1106,7 @@ function run_CA() {
     panelHTML += "<b>" + tr("Sort user list") + ':</b> <label><input type="radio" id="CA-opt-sortUserList0" name="CA-opt-sortUserList"' + (CA_Settings.sortUserList == 0 ? " checked" : "") + ">" + tr("No sort") + '</input></label> <label><input type="radio" id="CA-opt-sortUserList1" name="CA-opt-sortUserList"' + (CA_Settings.sortUserList == 1 ? " checked" : "") + ">" + tr("User name") + '</input></label> <label><input type="radio" id="CA-opt-sortUserList2" name="CA-opt-sortUserList"' + (CA_Settings.sortUserList == 
     2 ? " checked" : "") + ">" + tr("User rank") + '</input></Label><label><input type="radio" id="CA-opt-sortUserList3" name="CA-opt-sortUserList"' + (CA_Settings.sortUserList == 3 ? " checked" : "") + ">" + tr("Distance") + "</input></Label><br />";
     panelHTML += '<label title="' + tr("Set the room name exactly as it appear in the room list\n\nLet blank to disable this feature") + '">' + tr("Force room") + ': <input style="height: 25px;" type="text" size="15" id="CA-opt-forceroom" value="' + CA_Settings.forceRoom + '" /></Label><br />';
+      panelHTML += '<label><input type="checkbox" id="CA-opt-showEditorProfileIcon"' + (CA_Settings.showEditorProfileIcon ? " checked" : "") + '> ' + tr("Show editor profile icon in user list") + '.</input></label><br />';
     if (document.location.host.indexOf("beta") != -1) {
       panelHTML += '<label><input type="checkbox" id="CA-opt-defaultProdChatBetaWME"' + (CA_Settings.defaultProdChatBetaWME ? " checked" : "") + "> " + tr("Default to prod chat on WME Beta") + "</input></Label><br />";
     }
@@ -1813,35 +1814,47 @@ function run_CA() {
               break;
             }
           }
-          if (userName != W.loginManager.user.userName && userName != "") {
-            var bell = document.createElement("a");
-            bell.href = "#";
-            bell.id = "CA-bell-" + userName;
-            var i0 = document.createElement("img");
-            i0.src = "data:image/png;base64," + chipIcon;
-            i0.style.width = "15px";
-            i0.style.cssFloat = "left";
-            var i1 = document.createElement("img");
-            i1.src = "data:image/png;base64," + bellIcon;
-            i1.style.width = "15px";
-            i1.style.cssFloat = "left";
-            var i2 = document.createElement("img");
-            i2.src = "data:image/png;base64," + zzzIcon;
-            i2.style.width = "15px";
-            i2.style.cssFloat = "left";
-            bell.appendChild(i0);
-            bell.appendChild(i1);
-            bell.appendChild(i2);
-            changeIconUserStatus(bell, 2);
-            bell.style.cssFloat = "left";
-            bell.style.margin = "0px";
-            bell.style.padding = "0px";
-            bell.style.marginLeft = "-15px";
-            if (W.model.chat.attributes.visible == true) {
-              bell.onclick = getFunctionWithArgs(bipUser, [userName]);
+            if (userName != W.loginManager.user.userName && userName != "") {
+                let profile = document.createElement("a");
+                profile.href = `https://www.waze.com/user/editor/${userName}`;
+                profile.title = tr(`Open ${userName}'s editor profile.`);
+                profile.target = '_blank';
+                profile.style.cssFloat = "left";
+                profile.style.margin = "0px 0px 0px -15px";
+                profile.style.padding = "0px";
+                let profileicon = document.createElement("i");
+                profileicon.className = "fa fa-user";
+                profile.appendChild(profileicon);
+                var bell = document.createElement("a");
+                bell.href = "#";
+                bell.id = "CA-bell-" + userName;
+                var i0 = document.createElement("img");
+                i0.src = "data:image/png;base64," + chipIcon;
+                i0.style.width = "15px";
+                i0.style.cssFloat = "left";
+                var i1 = document.createElement("img");
+                i1.src = "data:image/png;base64," + bellIcon;
+                i1.style.width = "15px";
+                i1.style.cssFloat = "left";
+                var i2 = document.createElement("img");
+                i2.src = "data:image/png;base64," + zzzIcon;
+                i2.style.width = "15px";
+                i2.style.cssFloat = "left";
+                bell.appendChild(i0);
+                bell.appendChild(i1);
+                bell.appendChild(i2);
+                changeIconUserStatus(bell, 2);
+                bell.style.cssFloat = "left";
+                bell.style.margin = "0px";
+                bell.style.padding = "0px";
+                bell.style.marginLeft = "-15px";
+                if (W.model.chat.attributes.visible == true) {
+                    bell.onclick = getFunctionWithArgs(bipUser, [userName]);
+                }
+                user.insertBefore(bell, user.firstChild);
+                if(CA_Settings.showEditorProfileIcon)
+                    $(user).prepend(profile);
             }
-            user.insertBefore(bell, user.firstChild);
-          }
         } else {
           if (user.childNodes.length == 2) {
             var bell = user.firstChild;
