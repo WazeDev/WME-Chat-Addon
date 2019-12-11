@@ -402,13 +402,13 @@ function run_CA() {
   }
   function initialiseCA() {
     var oriSendMessage = W.model.chat.sendMessage;
-    W.model.chat.sendMessage = function(m) {
-      if (W.Config.marx.server == "https://marx.waze.com:443" && document.location.host.indexOf("beta") != -1 && m.search(baseURLs[2]) != -1) {
-        m = m.replace("https://beta.waze.com/", "https://www.waze.com/");
-        log("beta perma changed to prod: " + m);
-      }
-      oriSendMessage.call(W.model.chat, m);
-    };
+//     W.model.chat.sendMessage = function(m) {
+//       if (W.Config.marx.server == "https://marx.waze.com:443" && document.location.host.indexOf("beta") != -1 && m.search(baseURLs[2]) != -1) {
+//         m = m.replace("https://beta.waze.com/", "https://www.waze.com/");
+//         log("beta perma changed to prod: " + m);
+//       }
+//       oriSendMessage.call(W.model.chat, m);
+//     };
     W.model.chat.messages.on("messageUpdated", function() {
       try {
         iSendAMessage.apply(this, arguments);
