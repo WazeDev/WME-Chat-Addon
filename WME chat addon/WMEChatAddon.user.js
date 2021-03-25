@@ -403,10 +403,11 @@ function run_CA() {
   function initialiseCA() {
     var oriSendMessage = W.model.chat.sendMessage;
     W.model.chat.sendMessage = function(m) {
-      if (W.Config.marx.server == "https://marx.waze.com:443" && document.location.host.indexOf("beta") != -1 && m.search(baseURLs[2]) != -1) {
-        m = m.replace("https://beta.waze.com/", "https://www.waze.com/");
-        log("beta perma changed to prod: " + m);
-      }
+      // FIXME
+      //if (W.Config.marx.server == "https://marx.waze.com:443" && document.location.host.indexOf("beta") != -1 && m.search(baseURLs[2]) != -1) {
+      //  m = m.replace("https://beta.waze.com/", "https://www.waze.com/");
+      //  log("beta perma changed to prod: " + m);
+      //}
       oriSendMessage.call(W.model.chat, m);
     };
     W.model.chat.messages.on("messageUpdated", function() {
@@ -598,6 +599,7 @@ function run_CA() {
     }
   }
   function switchBeta() {
+    /* FIXME
     if (W.Config.marx.server == "https://marx.waze.com:443") {
       W.Config.marx.server = "https://marx-beta.waze.com:443";
       reloadRoom();
@@ -615,6 +617,7 @@ function run_CA() {
         }
       }
     }
+    */
   }
   function reloadRoom() {
     resetChatSocket({onSuccess:roomChanged});
@@ -2233,11 +2236,11 @@ function run_CA() {
     log("Reset chat socket");
     W.model.chat._marx.socket.removeAllListeners();
     try {
-      W.model.chat._marx.socket.socket.disconnect();
+      W.model.chat._marx.disconnect();
     } catch (e) {
       logError("chat disconnect:", e);
     }
-    if (W.model.chat._marx.socket.socket.connected == true || W.model.chat._marx.socket.socket.open == true) {
+    if (W.model.chat._marx.socket.connected == true || W.model.chat._marx.socket.open == true) {
       log("wait for disconnection...");
       window.setTimeout(function() {
         resetChatSocket(params);
@@ -2245,20 +2248,17 @@ function run_CA() {
       });
       return;
     }
-    delete io.sockets[W.Config.marx.server];
     var status = {NotConnected:0, FirstConnection:1, Reconnection:2};
-    var t = {};
-    t.sessionId = $.cookie(W.loginManager.getAuthCookieName());
-    var address = W.Config.marx.server + "/chat?" + $.param(t);
-    var socket = io.connect(address, {"try multiple transports":!1, "force new connection":true, "forceNew":true});
+    var server = "/editor/chat";
+    var socket = io(server, { path: server, transports: ["websocket"], "try multiple transports":!1, "force new connection":true, "forceNew":true});
     socket.on("connect", function(e) {
       return function() {
-        return e.mode === status.NotConnected ? (e.mode = status.FirstConnection, e.trigger("firstConnect")) : (e.mode = status.Reconnection, e.trigger("reconnect"));
+        return e.mode === status.NotConnected ? (e.mode = status.FirstConnection, e.events.dispatcher.trigger("firstConnect")) : (e.mode = status.Reconnection, e.events.dispatcher.trigger("reconnect"));
       };
     }(W.model.chat._marx));
     socket.on("disconnect", function(e) {
       return function() {
-        return e.trigger("disconnect");
+        return e.events.dispatcher.trigger("disconnect");
       };
     }(W.model.chat._marx));
     socket.on("connect_error", function(e) {
@@ -2266,7 +2266,6 @@ function run_CA() {
         log("socket connection error: ", e);
       };
     }(W.model.chat._marx));
-    io.sockets[W.Config.marx.server] = socket.socket;
     W.model.chat._marx.socket = socket;
     W.model.liveUsers._marx.socket = socket;
     W.model.chat._registerSocketEvents();
@@ -2363,3 +2362,4 @@ var CAscript = document.createElement("script");
 CAscript.textContent = "" + run_CA.toString() + " \n" + "run_CA();";
 CAscript.setAttribute("type", "application/javascript");
 document.body.appendChild(CAscript);
+
