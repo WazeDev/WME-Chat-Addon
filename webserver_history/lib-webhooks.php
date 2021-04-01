@@ -82,7 +82,24 @@ function sendToSlack($config, $username, $message) {
 }
 
 function sendToDiscord($config, $username, $message) {
-	// TODO
+	// build the payload for the webhook
+	$data_string = json_encode([ 'username' => $username, 'content' => $message ]);
+
+	// create the POST request to webhook
+	$ch = curl_init($config->webhook);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+		'Content-Type: application/json',
+		'Content-Length: ' . strlen($data_string))
+	);
+
+	// engage!
+	$result = curl_exec($ch);
+
+	// assume it sent fine
+	return true;
 }
 
 ?>
