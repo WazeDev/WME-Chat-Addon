@@ -25,6 +25,9 @@ function sendToWebhook($room, $username, $message) {
 	}
 	$config = $configs->{$room};
 
+	// decode &quot; etc
+	$message = html_entity_decode($message);
+
 	// send message depending on the type of webhook
 	if ($config->type == "Console") {
 		$ok = sendToConsole($config, $username, $message);
@@ -43,7 +46,7 @@ function sendToWebhook($room, $username, $message) {
 }
 
 function sendToConsole($config, $username, $message) {
-	printf("| *%s* _%s_\n", $username, $message);
+	printf("| %s: %s\n", $username, $message);
 	return true;
 }
 
