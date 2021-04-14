@@ -11,6 +11,7 @@ function endsWith($haystack, $needle) {
 }
 */
 
+include ('lib-webhooks.php');
 
 function startsWith($haystack,$needle) 
 { 
@@ -539,7 +540,9 @@ for ($i=0; $i<count($data); $i++)
 		my_var_dump("result", $result);
 		if (!$result)
 			my_var_dump("MySQL error:", mysqli_error());
-
+			
+		// webhook integration
+		sendToWebhook($data[$i]['room'], $data[$i]['username'], $data[$i]['message']);
 	}
 	$query="UNLOCK TABLES";
 	$result = mysqli_query($link, $query);
