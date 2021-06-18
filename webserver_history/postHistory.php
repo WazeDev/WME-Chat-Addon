@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
 function startsWith($haystack, $needle) {
     // search backwards starting from haystack length characters from the end
@@ -384,8 +384,8 @@ for ($i=0; $i<count($data); $i++)
 	$datetime = mysqli_real_escape_string($link, $data[$i]['datetime']);*/
 	
 	/*if ($debug)	var_dump($data);
-    if ($room!="France")
-        die();*/
+	if ($room!="France")
+		die();*/
 
 	/*$message = $data[$i]['message'];*/
 
@@ -430,7 +430,7 @@ for ($i=0; $i<count($data); $i++)
 				 " ORDER BY datetime DESC LIMIT 1";
 	/*echo $query;*/
 	$lastMessage=null;
-  my_var_dump("query last message" , $query);
+	my_var_dump("query last message" , $query);
 	$result = mysqli_query($link, $query);
 	my_var_dump("result", $result);
 	$row = mysqli_fetch_assoc($result);
@@ -445,7 +445,7 @@ for ($i=0; $i<count($data); $i++)
 				 "AND datetime>DATE_SUB('" . $now . "', INTERVAL 4 SECOND)";
 				 " ORDER BY datetime DESC";
 	/*echo $query;*/
-  my_var_dump("query last per date 4 sec", $query);
+	my_var_dump("query last per date 4 sec", $query);
 	$result = mysqli_query($link, $query);
 	my_var_dump("result", $result);
 	
@@ -541,8 +541,18 @@ for ($i=0; $i<count($data); $i++)
 		if (!$result)
 			my_var_dump("MySQL error:", mysqli_error());
 			
-		// webhook integration
-		sendToWebhook($data[$i]['room'], $data[$i]['username'], $data[$i]['message']);
+		// extract just the newest part of the message
+		$newMessage = $data[$i]['message'];
+		if ($lastMessage!=null &&
+				startsWith($newMessage, $lastMessage['message']) &&
+				$lastMessage['username']==$data[$i]['username'])
+		{
+			$lastmsglen = mb_strlen($lastMessage['message']);
+			$newMessage = mb_substr($newMessage, $lastmsglen+1);
+		}
+		
+		// send to webhook integration
+		sendToWebhook($data[$i]['room'], $data[$i]['username'], $newMessage);
 	}
 	$query="UNLOCK TABLES";
 	$result = mysqli_query($link, $query);
