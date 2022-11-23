@@ -102,7 +102,7 @@ function lookFordownloadHelperJob() {
 }
 window.setTimeout(lookFordownloadHelperJob);
 function run_CA() {
-  var ca_version = "2018.07.05.01";
+  var ca_version = "2022.11.23.01";
   var isDebug = false;
   var targetCount = 0;
   var bipCount = 0;
