@@ -109,7 +109,7 @@ function run_CA() {
   var divPerma = null;
   var divChat = null;
   var doNotNotifyNext = false;
-  var serverBase = "http://wazedev.com/chataddon";
+  var serverBase = "https://wazedev.com/chataddon";
   var lastMessageFrom = "";
   var hasUnreadMessages = false;
   var tts_audio = null;
@@ -236,7 +236,7 @@ function run_CA() {
   translations.de["Contribute to history"] = "Zur Chat-Historie beitragen";
   translations.de["Default to prod chat on WME Beta"] = "Immer prod. Chat in Beta WME einstellen";
   var CA_Settings = null;
-  var baseURLs = [new RegExp("https://www.waze.com/editor"), new RegExp("https://www.waze.com/[^/]+/editor"), new RegExp("https://beta.waze.com/")];
+  var baseURLs = [new RegExp("https://(www.)?waze.com/editor"), new RegExp("https://(www.)?waze.com/[^/]+/editor"), new RegExp("https://beta.waze.com/")];
   function tr(str) {
     if (translations.hasOwnProperty(I18n.locale) && translations[I18n.locale].hasOwnProperty(str)) {
       return translations[I18n.locale][str];
