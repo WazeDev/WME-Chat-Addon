@@ -2,7 +2,7 @@
 // @name            WME Chat addon
 // @description     removes duplicates messages, formats link and permalinks, and some stuffs
 // @namespace       dummyd2
-// @version         2022.11.23.01
+// @version         2023.03.11.01
 // @icon            data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAAZiS0dEAAAAAAAA+UO7fwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB94DDg83H1XMMOAAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAAEQ0lEQVRYw+2XTUhcVxTHf0+dwcxUHawuxImtH0hbBEebGLCFutGFgSaBriImoXRRBLciqYuKza4bN21dVFcJgouE2IKolIJYP0BmFCwKoyJxksyMTGZ0Zvpax3u6eW+YD40abTftH+7mvnfv/3/OPfecc+G/Du0ca2sBJ5Bv7BMDXgDr/6Tgz4CfgAAQAaIGcQzYB8KAH/gZuHVRpAXAbeAlIIDk5uaKzWZTRUVFUlxcLMXFxVJUVCQ2m03y8vLE/A/wAV8Aljc9gk+AB8BHABUVFTQ0NHDt2jWuXLlCbW0tZWVlKKXw+/14vV4WFxdZWFhgaWlJdnZ2zP0XgF7g17NY/qXhUrHb7aq/v195PB45DZRSsrKyIgMDA2K1Wk1vhAxvnAq3AR2QiooKtba2JkqpNILTIJFIyMbGhqqvr1eGiEOg6yTyauBPQOrq6lQikTgTaaYnRET8fr80NzcLoAzDPn6dgBlA6uvrVTgcfmPyTBHb29tSU1NjHscvgP0o8k8BcTgcanp6+tzkmSJmZ2dNAQcGVxZ+A+TmzZvnZz0GHR0dZjwMAdZU8hLgldVqVUNDQxdmfSZmZmZML2wAhZl3fr+goEBWV1ezXHiUmNMIzLw94XBY7Ha7KaIkJ0XAW0COxWKhqqoqPVtpGpqmMTw8zN27d3ny5Ely/uHDh9y5c4epqSmUUiilePz4Mffu3WNychJN0xCRtH2MYMxKhNeBmMPhkN3d3SxLxsfHpbCwUABxOp3i8Xhkfn4+mXbz8/MlEAiI1+tNzmmaJj6fL22fcDgsNTU1ZhyUpnrgBXB4cHAgq6urAEnlAJubm8TjcQACgQCRSIS1tbXkd13XCYVCbG1tJedEhPX19OKo6zper1cD/jISU1pdeJ6TkyN9fX1ZHvD5fNLa2ipOp1M6OzslGAxKNBqVlpYWKS8vl46ODonH4xKNRqW9vV2cTqfcuHEjKxZGRkZM62ePygXDgDQ1NalgMJi1OBQKidvtlkgkkvy2v78vHo9HYrFYcm5vb0+Wl5dF1/WsQKyurjYF3AdyMgWUmOc3ODiYFv2ZEX/czTjqFpj/9fT0pJbpD49LxQ9MEXNzc+oiMqCIyNjYmFgsFmXUg+9eVwvyzXrQ1NR0IeSPHj0Sh8Nhun4JePukingLEJfLda6sFwwGpaurS9nt9lTyd0/TD1w/j4BQKCS9vb1SWloqmqaZ5z4JlGYS5R1BbgM+B7h8+bLouq6Nj48zOjoqT58+1RKJBC6Xi7a2NmlsbNQqKys5PDzk2bNneDweJiYmcLvd5l7K6Kq+B74GEqex/r7ZvXR3d6urV6+qlCZTjA5YThgxwA18C7x/lnfBV8A3Keo1Y0SM8jkLxI2u6YNj3gW/G2+DdeD5WZrQFoMo05ofgXeOSBoWg/ySMfJf134fh9QYuAT8YVjzEvgBGAFeHbP2wBgXivcAF//jX8TfP8rg1M0AqeYAAAAASUVORK5CYII=
 // @include         https://www.waze.com/editor*
 // @include         https://www.waze.com/*/editor*
@@ -16,7 +16,6 @@
 // @copyright       2018, dummyd2, Seb-D59, WazeDev
 // @connect         docs.google.com
 // @connect         wazedev.com
-// @connect         code.responsivevoice.org
 // ==/UserScript==
 
 
@@ -122,7 +121,6 @@ function run_CA() {
   var roomForced = false;
   var CMList = null;
   var userAlertList = {};
-  var isResponsiveVoiceOK = false;
   var history = [];
   var historyLeaders = {};
   var uid = null;
@@ -377,27 +375,12 @@ function run_CA() {
   }
   function setupTTS() {
     log("setup TTS Lang");
-    var langSelectEl = getId("CA-opt-ttslanguage");
-    if (langSelectEl !== null) {
-      for (var i = 0; i < responsiveVoice.responsivevoices.length; i++) {
-        log("responsiveVoice", responsiveVoice.responsivevoices[i].name);
-        var opt = document.createElement("option");
-        opt.value = responsiveVoice.responsivevoices[i].name;
-        opt.innerHTML = responsiveVoice.responsivevoices[i].name;
-        if (CA_Settings.tts_language == opt.value) {
-          opt.selected = true;
-        }
-        langSelectEl.appendChild(opt);
-      }
-    }
     tts_audio = new Audio;
     tts_audio.addEventListener("ended", processTTS);
     tts_audio.addEventListener("error", processTTS);
     tts_audio.addEventListener("stalled", processTTS);
     tts_audio.addEventListener("abort", processTTS);
     tts_audio.defaultPlaybackRate = CA_Settings.tts_playbackrate;
-    responsiveVoice.mapRVs();
-    responsiveVoice.fallback_playbackrate = CA_Settings.tts_playbackrate;
     window.setTimeout(processTTS);
   }
   function initialiseCA() {
@@ -533,22 +516,7 @@ function run_CA() {
     if (document.location.host.indexOf("beta") != -1) {
       getId("CA-switchBeta").onclick = switchBeta;
     }
-    var params = {url:"http://code.responsivevoice.org/responsivevoice.js", headers:{"User-Agent":"Mozilla/5.0", "Accept":"text/plain"}, data:null, method:"GET"};
-    WMECADownloadHelper.add(params, function(data) {
-      if (data.status == "success") {
-        try {
-          var TTSscript = document.createElement("script");
-          TTSscript.textContent = data.data;
-          TTSscript.setAttribute("type", "application/javascript");
-          document.body.appendChild(TTSscript);
-          window.setTimeout(setupTTS);
-          isResponsiveVoiceOK = true;
-        } catch (e) {
-          logError("Error while getting TTS Script!", e);
-          isResponsiveVoiceOK = false;
-        }
-      }
-    }, null);
+    window.setTimeout(setupTTS);
     window.setInterval(watch, 1000);
     var userListDiv = getId("chat").getElementsByClassName("users")[0];
     userListDiv.onmouseenter = function() {
@@ -865,11 +833,7 @@ function run_CA() {
     if (tts_audio.error != null) {
       log("tts_audio.error", tts_audio.error);
     }
-    if (isResponsiveVoiceOK == false) {
-      tts_messages = [];
-      return;
-    }
-    if ((tts_audio.ended || tts_audio.currentSrc == "" || tts_audio.error != null) && tts_messages.length != 0 && (responsiveVoice.voiceSupport() && !responsiveVoice.isPlaying() || !responsiveVoice.voiceSupport())) {
+    if ((tts_audio.ended || tts_audio.currentSrc == "" || tts_audio.error != null) && tts_messages.length != 0) {
       var text = tts_messages[0];
       var urls = text.match(/(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/g);
       if (urls != null) {
@@ -894,24 +858,12 @@ function run_CA() {
           text = text.replace(urls[i], " " + newUrlText + " ");
         }
       }
-      var textCleaned = encodeURIComponent(text);
-      {
-        for (var i = 0; i < responsiveVoice.responsivevoices.length; i++) {
-          if (responsiveVoice.responsivevoices[i].name == CA_Settings.tts_language) {
-            if (responsiveVoice.responsivevoices[i].hasOwnProperty("mappedProfile") == false) {
-              continue;
-            }
-            if (responsiveVoice.responsivevoices[i].mappedProfile.hasOwnProperty("collectionvoice") == false) {
-              continue;
-            }
-            var cv = responsiveVoice.responsivevoices[i].mappedProfile.collectionvoice;
-            var TTSurl = "http://code.responsivevoice.org/getvoice.php?t=" + textCleaned + "&tl=" + (cv.lang || "en-US") + "&sv=" + (cv.service || "") + "&vn=" + (cv.voicename || "");
-            tts_audio.src = TTSurl;
-            tts_audio.play();
-            break;
-          }
-        }
-      }
+      // Play text using Waze's own TTS system
+      var params = W.Config.tts.options;
+      params.lang = I18n.locale;
+      params.text = text;
+      tts_audio.src = W.Config.tts.url + "?" + $.param(params);
+      tts_audio.play();
       tts_messages.splice(0, 1);
     }
     if (tts_messages.length == 0) {
@@ -921,7 +873,7 @@ function run_CA() {
     }
   }
   function loadSettings() {
-    CA_Settings = {showDate:true, messageSound:false, messageBGColor:"A1DCF5", alertBGColor:"880000", alertMatch:W.loginManager.user.userName, alertSound:false, removeInvisible:false, bipPattern:"@{userName}", systemMessageOnJoinLeave:false, usernamesMatch:"", usernamesMatchPlaySound:true, sortUserList:0, forceRoom:"", tts:false, tts_language:"en", tts_fromPrefix:"from {userName}", tts_linkTo:"link to {link}", tts_playbackrate:1.0, sortUserListActivity:false, defaultProdChatBetaWME:false, allowUploadStatus:null,
+    CA_Settings = {showDate:true, messageSound:false, messageBGColor:"A1DCF5", alertBGColor:"880000", alertMatch:W.loginManager.user.userName, alertSound:false, removeInvisible:false, bipPattern:"@{userName}", systemMessageOnJoinLeave:false, usernamesMatch:"", usernamesMatchPlaySound:true, sortUserList:0, forceRoom:"", tts:false, tts_fromPrefix:"from {userName}", tts_linkTo:"link to {link}", tts_playbackrate:1.0, sortUserListActivity:false, defaultProdChatBetaWME:false, allowUploadStatus:null,
     contributeToHistory:false, showEditorProfileIcon:false};
     if (typeof localStorage.WMEChatAddon_settings !== "undefined") {
       var settings = JSON.parse(localStorage.WMEChatAddon_settings);
@@ -967,9 +919,6 @@ function run_CA() {
       }
       if (typeof settings.tts !== "undefined") {
         CA_Settings.tts = settings.tts;
-      }
-      if (typeof settings.tts_language !== "undefined") {
-        CA_Settings.tts_language = settings.tts_language;
       }
       if (typeof settings.tts_fromPrefix !== "undefined") {
         CA_Settings.tts_fromPrefix = settings.tts_fromPrefix;
@@ -1071,16 +1020,13 @@ function run_CA() {
     if (CA_Settings.tts_playbackrate > 2.0) {
       CA_Settings.tts_playbackrate = 2.0;
     }
-    CA_Settings = {messageSound:getId("CA-opt-messagesound").checked, showDate:getId("CA-opt-showdate").checked, messageBGColor:messageBG, alertBGColor:alertBG, alertMatch:getId("CA-opt-alertmatch").value, alertSound:getId("CA-opt-alertsound").checked, removeInvisible:getId("CA-opt-removeinvisibles").checked, bipPattern:bipPattern, systemMessageOnJoinLeave:getId("CA-opt-systemmessageonjoinleave").checked, usernamesMatch:getId("CA-opt-usernamesmatch").value, usernamesMatchPlaySound:getId("CA-opt-usernamesmatchplaysound").checked, 
-    sortUserList:getId("CA-opt-sortUserList0").checked ? 0 : getId("CA-opt-sortUserList1").checked ? 1 : getId("CA-opt-sortUserList2").checked ? 2 : 3, forceRoom:getId("CA-opt-forceroom").value, tts:getId("CA-opt-tts").checked, tts_language:getId("CA-opt-ttslanguage").value, tts_fromPrefix:getId("CA-opt-ttsfromprefix").value, tts_linkTo:getId("CA-opt-ttslinkto").value, tts_playbackrate:tts_playbackrate, sortUserListActivity:getId("CA-opt-sortUserListActivity").checked, contributeToHistory:document.location.host.indexOf("beta") == 
+    CA_Settings = {messageSound:getId("CA-opt-messagesound").checked, showDate:getId("CA-opt-showdate").checked, messageBGColor:messageBG, alertBGColor:alertBG, alertMatch:getId("CA-opt-alertmatch").value, alertSound:getId("CA-opt-alertsound").checked, removeInvisible:getId("CA-opt-removeinvisibles").checked, bipPattern:bipPattern, systemMessageOnJoinLeave:getId("CA-opt-systemmessageonjoinleave").checked, usernamesMatch:getId("CA-opt-usernamesmatch").value, usernamesMatchPlaySound:getId("CA-opt-usernamesmatchplaysound").checked,
+    sortUserList:getId("CA-opt-sortUserList0").checked ? 0 : getId("CA-opt-sortUserList1").checked ? 1 : getId("CA-opt-sortUserList2").checked ? 2 : 3, forceRoom:getId("CA-opt-forceroom").value, tts:getId("CA-opt-tts").checked, tts_fromPrefix:getId("CA-opt-ttsfromprefix").value, tts_linkTo:getId("CA-opt-ttslinkto").value, tts_playbackrate:tts_playbackrate, sortUserListActivity:getId("CA-opt-sortUserListActivity").checked, contributeToHistory:document.location.host.indexOf("beta") ==
     -1 ? getId("CA-opt-contributeToHistory").checked : false, showEditorProfileIcon:getId("CA-opt-showEditorProfileIcon").checked};
     if (document.location.host.indexOf("beta") != -1) {
       CA_Settings.defaultProdChatBetaWME = getId("CA-opt-defaultProdChatBetaWME").checked;
     }
-    if (isResponsiveVoiceOK == true) {
-      responsiveVoice.fallback_playbackrate = CA_Settings.tts_playbackrate;
-      tts_audio.defaultPlaybackRate = CA_Settings.tts_playbackrate;
-    }
+    tts_audio.defaultPlaybackRate = CA_Settings.tts_playbackrate;
     sortUserList();
     return null;
   }
@@ -1089,10 +1035,9 @@ function run_CA() {
     panel.id = "CA-settingsPanel";
     panel.setAttribute("style", "border: 1px solid black; background-color: #FFFFFF; padding: 5px; position: absolute; top: 15px; right: 15px; z-index: 9999; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; display: none;");
     var panelHTML = '<center style="font-weight: bold; size: bigger;">' + tr("Chat addon settings") + "</center><br/>";
-    panelHTML += "<span>" + tr("TTS is powered by") + ' <a href="http://responsivevoice.org">ResponsiveVoice-NonCommercial</a> licensed under <a href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img title="ResponsiveVoice Text To Speech" src="https://responsivevoice.org/wp-content/uploads/2014/08/95x15.png" alt="95x15" width="95" height="15" /></a></span><br/>';
     panelHTML += '<label><input type="checkbox" id="CA-opt-messagesound"' + (CA_Settings.messageSound ? " checked" : "") + "> " + tr("Play sound on new message") + "</input></Label><br />";
+    panelHTML += '<label title="' + tr("Text to speech on messages") + '"><input type="checkbox" id="CA-opt-tts"' + (CA_Settings.tts ? " checked" : "") + "> TTS</input></Label> <label>" + tr("Text to speech on messages") + ' (' + I18n.locale + ')</Label><br/>';
     panelHTML += '<label title="' + tr("Text to speech speed") + '">' + tr("TTS playback rate (0.5 to 2.0)") + ': <input style="height: 25px;" type="text" size="10" maxlength="10" id="CA-opt-ttsplaybackrate" value="' + CA_Settings.tts_playbackrate + '" /></Label><br/>';
-    panelHTML += '<label title="' + tr("Text to speech on messages") + '"><input type="checkbox" id="CA-opt-tts"' + (CA_Settings.tts ? " checked" : "") + "> TTS</input></Label> <label>" + tr("language") + ': <select style="height: 25px;" id="CA-opt-ttslanguage" /></select></Label><br/>';
     panelHTML += '<label title="' + tr("Text to speech on from username") + '">' + tr("TTS from username") + ': <input style="height: 25px;" type="text" size="20" maxlength="100" id="CA-opt-ttsfromprefix" value="' + CA_Settings.tts_fromPrefix + '" /></Label><br/>';
     panelHTML += '<label title="' + tr("Text to speech on internet link") + '">' + tr("TTS link to") + ': <input style="height: 25px;" type="text" size="20" maxlength="100" id="CA-opt-ttslinkto" value="' + CA_Settings.tts_linkTo + '" /></Label><br/>';
     panelHTML += '<label><input type="checkbox" id="CA-opt-showdate"' + (CA_Settings.showDate ? " checked" : "") + "> " + tr("Show message date (uncheck for time only)") + "</input></Label><br />";
